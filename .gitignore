@@ -1,0 +1,7 @@
+dist
+node_modules
+out
+arweave.json
+logs
+.env
+.DS_Store
