@@ -1,6 +1,7 @@
 import KYVE from "@kyve/core";
 import { Command } from "commander";
 import { readFileSync } from "fs";
+import { version } from "../package.json";
 import uploadFunction from "./upload";
 import validateFunction from "./validate";
 
@@ -31,6 +32,7 @@ cli.option(
   true
 );
 cli.option("-e, --email <string>", "The email of the mantainer. [optional]");
+cli.version(version, "-v, --version");
 
 (async () => {
   await cli.parseAsync();
@@ -39,6 +41,7 @@ cli.option("-e, --email <string>", "The email of the mantainer. [optional]");
   const node = new KYVE(
     options.pool,
     "@kyve/evm",
+    version,
     options.stake,
     options.privateKey,
     options.keyfile && JSON.parse(readFileSync(options.keyfile, "utf-8")),

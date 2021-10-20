@@ -1,16 +1,17 @@
 {
   "name": "@kyve/evm",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "build:binaries": "tsc && pkg ./dist/index.js --out-path out",
-    "start": "node ./dist/index.js",
+    "build:binaries": "tsc && pkg ./dist/src/index.js --out-path out",
+    "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kyve/core": "^0.0.5",
+    "@kyve/core": "^0.0.6",
     "commander": "^8.2.0",
-    "ethers": "^5.4.7",
+    "ethers": "^5.5.1",
     "object-hash": "^2.2.0"
   },
   "devDependencies": {
