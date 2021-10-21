@@ -361,13 +361,14 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.0.6.tgz#98bb3c5052bbd6b37f48354cea8c0f1e7e2c3d7e"
-  integrity sha512-dQ03JvI7eViQwmQP4ruOT1vEj2NvCZrBUFmyySxE18Iw+6BzXSO8C9PeNBnB4TI9Uub4y+mHkxNSsy4YKN/olA==
+"@kyve/core@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.0.7.tgz#d28eb89e79265aa1462c8db6096c59ccbcc32c4a"
+  integrity sha512-QdikmtPRUYbrOVoMPSRVFhPgcIFQvRFz7cS3cIqBkgdCPADwsx9ZiwqnmGRXqFniIZYb+kGFBJSTWCuEBfe3Cg==
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
+    bignumber.js "^9.0.1"
     ethers "^5.4.7"
     prando "^6.0.1"
     rxjs "^7.4.0"
@@ -1358,6 +1359,11 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
+snekfetch@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.6.4.tgz#d13e80a616d892f3d38daae4289f4d258a645120"
+  integrity sha512-NjxjITIj04Ffqid5lqr7XdgwM7X61c/Dns073Ly170bPQHLm6jkmelye/eglS++1nfTWktpP6Y2bFXjdPlQqdw==
+
 source-map-support@^0.5.19:
   version "0.5.20"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.20.tgz#12166089f8f5e5e8c56926b377633392dd2cb6c9"
@@ -1519,6 +1525,13 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+
+webhook-discord@^3.7.8:
+  version "3.7.8"
+  resolved "https://registry.yarnpkg.com/webhook-discord/-/webhook-discord-3.7.8.tgz#856ce6928713ee7d1a05dbc8a64dfc233d0d816d"
+  integrity sha512-IDEvKmu83SIAPZD0efpEXj3ZEm+X8Q68iRuKEKtyXlGN9S9lVtdL7cp4I0AXqTapVj+eh+Wby7y9DaxP01Yk2g==
+  dependencies:
+    snekfetch "^3.6.4"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

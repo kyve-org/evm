@@ -52,3 +52,24 @@ jobs:
 
       - name: Push to Docker hub.
         run: docker push -a kyve/evm
+
+  webhook:
+    name: Post a message to Discord.
+    needs: [binaries, docker]
+    runs-on: ubuntu-latest
+
+    env:
+      DISCORD: ${{ secrets.DISCORD }}
+      VERSION: ${GITHUB_REF#refs/tags/}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Install yarn.
+        run: npm install -g yarn
+      - name: Install dependencies.
+        run: yarn install
+
+      - name: Run script.
+        run: node .github/webhook.js
