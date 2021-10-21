@@ -17,7 +17,6 @@
   "devDependencies": {
     "@types/node": "^16.10.3",
     "@types/object-hash": "^2.2.1",
-    "dotenv": "^10.0.0",
     "pkg": "^5.3.3",
     "prettier": "^2.4.1",
     "tslog": "^3.2.2",
