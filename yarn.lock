@@ -361,10 +361,10 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.0.9.tgz#ea9d61e0b3681f6823397dc2a7d1b6ac9f12a22d"
-  integrity sha512-tCevnZd8bIuRZlqI3oyLqPIt5A3EQKl1kyWA0THS6ZDY9TO8j63FhFdOwR5wDJpeuDCVxI0ZPd525vNLfQwsBA==
+"@kyve/core@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.0.10.tgz#e56027a5b0f49053c45b56321c5977846eca4532"
+  integrity sha512-HQU6e9TmuNREKbBrXHhtvNHqXLKiVxU7QIPB2i+T4Hc6MZXjuydc2ixDbzWkoxjPNxwGuFSTRXXRKROFsLSkiQ==
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
