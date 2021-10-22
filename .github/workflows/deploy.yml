@@ -60,7 +60,7 @@ jobs:
 
     env:
       DISCORD: ${{ secrets.DISCORD }}
-      VERSION: ${GITHUB_REF#refs/tags/}
+      VERSION: ${{ GITHUB_REF#refs/tags/ }}
 
     steps:
       - uses: actions/checkout@v2
