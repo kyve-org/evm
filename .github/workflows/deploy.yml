@@ -58,10 +58,6 @@ jobs:
     needs: [binaries, docker]
     runs-on: ubuntu-latest
 
-    env:
-      DISCORD: ${{ secrets.DISCORD }}
-      VERSION: ${{ GITHUB_REF#refs/tags/ }}
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -72,4 +68,4 @@ jobs:
         run: yarn install
 
       - name: Run script.
-        run: node .github/webhook.js
+        run: DISCORD=${{ secrets.DISCORD }} VERSION=${GITHUB_REF#refs/tags/} node .github/webhook.js
