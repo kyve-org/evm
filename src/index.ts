@@ -27,6 +27,10 @@ cli.option(
   "The identifier name of the node. [optional, default = random]"
 );
 cli.option(
+  "-e, --endpoint <string>",
+  "A custom Moonbase Alpha endpoint. [optional]"
+);
+cli.option(
   "-st, --send-statistics <boolean>",
   "Send statistics. [optional, default = true]",
   true
@@ -45,7 +49,8 @@ cli.version(version, "-v, --version");
     options.stake,
     options.privateKey,
     options.keyfile && JSON.parse(readFileSync(options.keyfile, "utf-8")),
-    options.name
+    options.name,
+    options.endpoint
   );
 
   node.run(uploadFunction, validateFunction);
