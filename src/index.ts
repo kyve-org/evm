@@ -31,6 +31,10 @@ cli.option(
   "A custom Moonbase Alpha endpoint. [optional]"
 );
 cli.option(
+  "-g, --gas-multiplier <string>",
+  "The amount that you want to multiply the default gas price by. [optional]"
+);
+cli.option(
   "-st, --send-statistics <boolean>",
   "Send statistics. [optional, default = true]",
   true
@@ -50,7 +54,8 @@ cli.version(version, "-v, --version");
     options.privateKey,
     options.keyfile && JSON.parse(readFileSync(options.keyfile, "utf-8")),
     options.name,
-    options.endpoint
+    options.endpoint,
+    options.gasMultiplier
   );
 
   node.run(uploadFunction, validateFunction);
