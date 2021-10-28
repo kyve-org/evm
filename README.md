@@ -27,7 +27,7 @@ docker pull kyve/evm:latest
 And to start your node, run the following (don't forget to pass in [options](#options)):
 
 ```
-docker run --name kyve-evm-node kyve/evm:latest --pool {POOL_ADDRESS} --private-key {PRIVATE_KEY} --stake 100
+docker run --rm --name kyve-evm-node kyve/evm:latest --pool {POOL_ADDRESS} --private-key {PRIVATE_KEY} --stake 100
 ```
 
 ### Prebuilt Binaries
@@ -64,9 +64,9 @@ The identifier name of the node.
 
 Send statistics.
 
-#### `-e, --email <string>` _optional_
+#### `-e, --endpoint <string>` _optional_
 
-The email of the mantainer.
+A custom Moonbase Alpha endpoint. [optional]
 
 ### Run on linux
 

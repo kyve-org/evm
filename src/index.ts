@@ -39,7 +39,6 @@ cli.option(
   "Send statistics. [optional, default = true]",
   true
 );
-cli.option("-e, --email <string>", "The email of the mantainer. [optional]");
 cli.version(version, "-v, --version");
 
 (async () => {
