@@ -44,7 +44,7 @@ To run a binary, all you need to do is specify your [options](#options).
 
 The address of the pool you want to run on.
 
-#### `-s, --stake <number>`
+#### `-s, --stake <string>`
 
 The amount of tokens you want to stake.
 
@@ -60,13 +60,17 @@ The path to your Arweave keyfile.
 
 The identifier name of the node.
 
+#### `-e, --endpoint <string>` _optional_
+
+A custom Moonbase Alpha endpoint.
+
+#### `-g, --gas-multiplier <string>` _optional_
+
+The amount that you want to multiply the default gas price by.
+
 #### `-st, --send-statistics <boolean>` _optional, default is true_
 
 Send statistics.
-
-#### `-e, --endpoint <string>` _optional_
-
-A custom Moonbase Alpha endpoint. [optional]
 
 ### Run on linux
 
