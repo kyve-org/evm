@@ -9,7 +9,7 @@ import { ConfigType } from "./faces";
 
 const validateFunction = (
   listener: ListenFunctionObservable,
-  subscriber: ValidateFunctionSubscriber,
+  validator: ValidateFunctionSubscriber,
   config: ConfigType,
   logger: Logger
 ) => {
@@ -41,7 +41,7 @@ const validateFunction = (
       const uploaderHash = hash(JSON.parse(item.data));
 
       if (localHash !== uploaderHash) {
-        subscriber.next({
+        validator.vote({
           transaction: res.transaction,
           valid: false,
         });
@@ -49,7 +49,7 @@ const validateFunction = (
       }
     }
 
-    subscriber.next({
+    validator.vote({
       transaction: res.transaction,
       valid: true,
     });

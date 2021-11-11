@@ -363,7 +363,7 @@
 
 "@kyve/core@KYVENetwork/core#feat/generate":
   version "0.0.13"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/2141e6dae778bdec7cbbd4114973783f4995d917"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/14da30f0cd7821a8d6bbd870d2f55246fd51306e"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"

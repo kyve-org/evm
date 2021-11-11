@@ -4,7 +4,7 @@ import { Logger } from "tslog";
 import { ConfigType } from "./faces";
 
 const uploadFunction = (
-  subscriber: UploadFunctionSubscriber,
+  uploader: UploadFunctionSubscriber,
   config: ConfigType,
   logger: Logger
 ) => {
@@ -50,7 +50,7 @@ const uploadFunction = (
         );
       }
 
-      subscriber.next({ data: JSON.stringify(block), tags });
+      uploader.upload({ data: JSON.stringify(block), tags });
     });
   };
 
