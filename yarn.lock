@@ -361,14 +361,14 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@^0.0.13":
+"@kyve/core@KYVENetwork/core#feat/generate":
   version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.0.13.tgz#2137b4381714e63d3d63842cbaafafaca3b6c273"
-  integrity sha512-d2tK91iPnRQAWeFrGY2a3VYE2CKccmLdnDNeTg1uwhqJV6u/VFILaBha6jm2cr8JSdoAWEfn/dNaF9zOJMc/6A==
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/708cba19c739a58ff23d957f1070acf921b12a6f"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
     bignumber.js "^9.0.1"
+    commander "^8.3.0"
     ethers "^5.5.1"
     prando "^6.0.1"
     rxjs "^7.4.0"
@@ -592,10 +592,10 @@ color-name@~1.1.4:
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-commander@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-8.2.0.tgz#37fe2bde301d87d47a53adeff8b5915db1381ca8"
-  integrity sha512-LLKxDvHeL91/8MIyTAD5BFMNtoIwztGPMiM/7Bl8rIPmHCZXRxmSWr91h57dpOpnQ6jIUqEWdXE/uBYMfiVZDA==
+commander@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.3.0.tgz#4837ea1b2da67b9c616a67afbb0fafee567bca66"
+  integrity sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==
 
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
