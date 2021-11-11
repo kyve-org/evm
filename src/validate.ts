@@ -1,3 +1,4 @@
+import { getTagByName } from "@kyve/core";
 import {
   ListenFunctionObservable,
   ValidateFunctionSubscriber,
@@ -24,8 +25,7 @@ const validateFunction = (
   // Subscribe to the listener.
   listener.subscribe(async (res) => {
     for (const item of res.bundle) {
-      const blockHash = (item.tags || []).find((tag) => tag.name === "Block")
-        ?.value!;
+      const blockHash = getTagByName("Block", item.tags)!;
 
       logger.debug(`Found block. Hash = ${blockHash}`);
 

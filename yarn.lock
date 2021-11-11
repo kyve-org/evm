@@ -361,9 +361,24 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+"@kyve/core@KYVENetwork/core#dev":
+  version "0.0.13"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/84cefec1677aa44c6c8f407feeb1dc7e0b17299c"
+  dependencies:
+    arweave "^1.10.17"
+    base64url "^3.0.1"
+    bignumber.js "^9.0.1"
+    commander "^8.3.0"
+    ethers "^5.5.1"
+    prando "^6.0.1"
+    rxjs "^7.4.0"
+    semver "^7.3.5"
+    tslog "^3.2.2"
+    unique-names-generator "^4.6.0"
+
 "@kyve/core@KYVENetwork/core#feat/generate":
   version "0.0.13"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/14da30f0cd7821a8d6bbd870d2f55246fd51306e"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/c86d8db92ba88024422627375512cd0e7f77778a"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
