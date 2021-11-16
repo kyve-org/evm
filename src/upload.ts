@@ -12,49 +12,41 @@ const uploadFunction = (
     name: "EVM",
   });
 
-  const main = () => {
-    // Connect to the WebSocket endpoint.
-    const client = new ethers.providers.WebSocketProvider(config.wss);
-    logger.info(`✅ Connection created. Endpoint = ${config.wss}`);
+  // Connect to the WebSocket endpoint.
+  const client = new ethers.providers.WebSocketProvider(config.wss);
+  logger.info(`✅ Connection created. Endpoint = ${config.wss}`);
 
-    // Listen for hangups, and restart the connection.
-    client._websocket.on("close", () => {
-      logger.info("❎ Connection closed. Retrying ...");
-      client._websocket.terminate();
+  client._websocket.on("open", () =>
+    setInterval(() => client._websocket.ping(), 1000)
+  );
 
-      main();
-    });
+  // Subscribe to new blocks.
+  client.on("block", async (height: number) => {
+    logger.info(`🆕 Received a new block. Height = ${height}`);
 
-    // Subscribe to new blocks.
-    client.on("block", async (height: number) => {
-      logger.info(`🆕 Received a new block. Height = ${height}`);
+    const block = await client.getBlockWithTransactions(height);
+    if (block.transactions.length) {
+      block.transactions.forEach(
+        // @ts-ignore
+        (transaction) => delete transaction.confirmations
+      );
+    }
 
-      const block = await client.getBlockWithTransactions(height);
-      if (block.transactions.length) {
-        block.transactions.forEach(
-          // @ts-ignore
-          (transaction) => delete transaction.confirmations
-        );
-      }
+    const tags = [
+      { name: "Block", value: block.hash },
+      { name: "Height", value: block.number.toString() },
+    ];
+    if (block.transactions.length) {
+      block.transactions.forEach((transaction) =>
+        tags.push({
+          name: "Transaction",
+          value: transaction.hash,
+        })
+      );
+    }
 
-      const tags = [
-        { name: "Block", value: block.hash },
-        { name: "Height", value: block.number.toString() },
-      ];
-      if (block.transactions.length) {
-        block.transactions.forEach((transaction) =>
-          tags.push({
-            name: "Transaction",
-            value: transaction.hash,
-          })
-        );
-      }
-
-      uploader.upload({ data: JSON.stringify(block), tags });
-    });
-  };
-
-  main();
+    uploader.upload({ data: JSON.stringify(block), tags });
+  });
 };
 
 export default uploadFunction;
