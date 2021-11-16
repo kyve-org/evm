@@ -363,7 +363,7 @@
 
 "@kyve/core@KYVENetwork/core#dev":
   version "0.0.13"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/84cefec1677aa44c6c8f407feeb1dc7e0b17299c"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/427a289c5b3b42f12a46cd9821907a52334374e7"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
@@ -376,9 +376,9 @@
     tslog "^3.2.2"
     unique-names-generator "^4.6.0"
 
-"@kyve/core@KYVENetwork/core#feat/generate":
+"@kyve/core@KYVENetwork/core#fix/websocket":
   version "0.0.13"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/c86d8db92ba88024422627375512cd0e7f77778a"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/1ac82f3064153c2b4185fd8d1bc863ceea0c01cc"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"

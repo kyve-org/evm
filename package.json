@@ -3,8 +3,8 @@
   "version": "0.0.11",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "build:binaries": "tsc && pkg ./dist/src/index.js --out-path out",
+    "build": "yarn format && tsc",
+    "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-arm64,latest-macos-arm64,latest-win-arm64 --out-path out",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
