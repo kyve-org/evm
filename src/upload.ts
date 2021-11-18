@@ -9,7 +9,7 @@ const uploadFunction = (
   logger: Logger
 ) => {
   logger = logger.getChildLogger({
-    name: "EVM",
+    name: "Uploader",
   });
 
   // Connect to the WebSocket endpoint.
@@ -22,9 +22,8 @@ const uploadFunction = (
 
   // Subscribe to new blocks.
   client.on("block", async (height: number) => {
-    logger.info(`🆕 Received a new block. Height = ${height}`);
-
     const block = await client.getBlockWithTransactions(height);
+
     if (block.transactions.length) {
       block.transactions.forEach(
         // @ts-ignore
