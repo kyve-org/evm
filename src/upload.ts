@@ -17,7 +17,7 @@ const uploadFunction = (
   logger.info(`✅ Connection created. Endpoint = ${config.wss}`);
 
   client._websocket.on("open", () =>
-    setInterval(() => client._websocket.ping(), 1000)
+    setInterval(() => client._websocket.ping(), 5000)
   );
 
   // Subscribe to new blocks.
