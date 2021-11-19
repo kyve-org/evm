@@ -50,10 +50,10 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build the Docker image.
-        run: docker build -t kyve/evm:${GITHUB_REF#refs/tags/} -t kyve/evm:latest .
+        run: docker build -t kyve/evm-dev:${GITHUB_REF#refs/tags/} -t kyve/evm-dev:latest .
 
       - name: Push to Docker hub.
-        run: docker push -a kyve/evm
+        run: docker push -a kyve/evm-dev
 
   webhook:
     name: Post a message to Discord.
