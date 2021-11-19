@@ -1,0 +1,73 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - dev
+    tags:
+      - "v*"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  binaries:
+    name: Build release binaries.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Install yarn.
+        run: npm install -g yarn
+      - name: Install dependencies.
+        run: yarn install
+      - name: Build.
+        run: yarn build:binaries
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: kyve-evm-linux
+          path: ./out/index-linux
+      - uses: actions/upload-artifact@v2
+        with:
+          name: kyve-evm-macos
+          path: ./out/index-macos
+      - uses: actions/upload-artifact@v2
+        with:
+          name: kyve-evm-win.exe
+          path: ./out/index-win.exe
+
+  docker:
+    name: Build and publish Docker container.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to Docker.
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build the Docker image.
+        run: docker build -t kyve/evm:${GITHUB_REF#refs/tags/} -t kyve/evm:latest .
+
+      - name: Push to Docker hub.
+        run: docker push -a kyve/evm
+
+  webhook:
+    name: Post a message to Discord.
+    needs: [binaries, docker]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Install yarn.
+        run: npm install -g yarn
+      - name: Install dependencies.
+        run: yarn install
+
+      - name: Run script.
+        run: DISCORD=${{ secrets.DISCORD }} VERSION=${GITHUB_REF#refs/tags/} node .github/webhook.js
