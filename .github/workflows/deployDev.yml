@@ -1,11 +1,8 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - dev
-    tags:
-      - "v*"
+  release:
+    types: [prereleased]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
