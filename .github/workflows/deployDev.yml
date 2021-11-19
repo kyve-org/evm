@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   release:
-    types: [released]
+    types: [prereleased]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -47,24 +47,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build the Docker image.
-        run: docker build -t kyve/evm:${GITHUB_REF#refs/tags/} -t kyve/evm:latest .
+        run: docker build -t kyve/evm-dev:${GITHUB_REF#refs/tags/} -t kyve/evm-dev:latest .
 
       - name: Push to Docker hub.
-        run: docker push -a kyve/evm
-
-  webhook:
-    name: Post a message to Discord.
-    needs: [binaries, docker]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-
-      - name: Install yarn.
-        run: npm install -g yarn
-      - name: Install dependencies.
-        run: yarn install
-
-      - name: Run script.
-        run: DISCORD=${{ secrets.DISCORD }} VERSION=${GITHUB_REF#refs/tags/} node .github/webhook.js
+        run: docker push -a kyve/evm-dev
