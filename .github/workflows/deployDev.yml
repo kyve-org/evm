@@ -8,34 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  binaries:
-    name: Build release binaries.
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-
-      - name: Install yarn.
-        run: npm install -g yarn
-      - name: Install dependencies.
-        run: yarn install
-      - name: Build.
-        run: yarn build:binaries
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: kyve-evm-linux
-          path: ./out/index-linux
-      - uses: actions/upload-artifact@v2
-        with:
-          name: kyve-evm-macos
-          path: ./out/index-macos
-      - uses: actions/upload-artifact@v2
-        with:
-          name: kyve-evm-win.exe
-          path: ./out/index-win.exe
-
   docker:
     name: Build and publish Docker container.
     runs-on: ubuntu-latest
@@ -47,7 +19,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build the Docker image.
-        run: docker build -t kyve/evm-dev:${GITHUB_REF#refs/tags/} -t kyve/evm-dev:latest .
+        run: docker build -t kyve/evm-dev:latest .
 
       - name: Push to Docker hub.
         run: docker push -a kyve/evm-dev
