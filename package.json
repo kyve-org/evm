@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-arm64,latest-macos-arm64,latest-win-arm64 --out-path out",
+    "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-x64,latest-macos-x64,latest-win-x64 --out-path out",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
