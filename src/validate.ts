@@ -1,3 +1,4 @@
+import { getTagByName } from "@kyve/core";
 import {
   ListenFunctionObservable,
   ValidateFunctionSubscriber,
@@ -9,7 +10,7 @@ import { ConfigType } from "./faces";
 
 const validateFunction = (
   listener: ListenFunctionObservable,
-  subscriber: ValidateFunctionSubscriber,
+  validator: ValidateFunctionSubscriber,
   config: ConfigType,
   logger: Logger
 ) => {
@@ -24,8 +25,7 @@ const validateFunction = (
   // Subscribe to the listener.
   listener.subscribe(async (res) => {
     for (const item of res.bundle) {
-      const blockHash = (item.tags || []).find((tag) => tag.name === "Block")
-        ?.value!;
+      const blockHash = getTagByName("Block", item.tags)!;
 
       logger.debug(`Found block. Hash = ${blockHash}`);
 
@@ -41,7 +41,7 @@ const validateFunction = (
       const uploaderHash = hash(JSON.parse(item.data));
 
       if (localHash !== uploaderHash) {
-        subscriber.next({
+        validator.vote({
           transaction: res.transaction,
           valid: false,
         });
@@ -49,7 +49,7 @@ const validateFunction = (
       }
     }
 
-    subscriber.next({
+    validator.vote({
       transaction: res.transaction,
       valid: true,
     });

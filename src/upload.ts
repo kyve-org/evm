@@ -4,7 +4,7 @@ import { Logger } from "tslog";
 import { ConfigType } from "./faces";
 
 const uploadFunction = (
-  subscriber: UploadFunctionSubscriber,
+  uploader: UploadFunctionSubscriber,
   config: ConfigType,
   logger: Logger
 ) => {
@@ -27,9 +27,8 @@ const uploadFunction = (
 
     // Subscribe to new blocks.
     client.on("block", async (height: number) => {
-      logger.info(`🆕 Received a new block. Height = ${height}`);
-
       const block = await client.getBlockWithTransactions(height);
+
       if (block.transactions.length) {
         block.transactions.forEach(
           // @ts-ignore
@@ -50,7 +49,7 @@ const uploadFunction = (
         );
       }
 
-      subscriber.next({ data: JSON.stringify(block), tags });
+      uploader.upload({ data: JSON.stringify(block), tags });
     });
   };
 
