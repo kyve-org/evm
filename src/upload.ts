@@ -9,43 +9,51 @@ const uploadFunction = (
   logger: Logger
 ) => {
   logger = logger.getChildLogger({
-    name: "Uploader",
+    name: "EVM",
   });
 
-  // Connect to the WebSocket endpoint.
-  const client = new ethers.providers.WebSocketProvider(config.wss);
-  logger.info(`✅ Connection created. Endpoint = ${config.wss}`);
+  const main = () => {
+    // Connect to the WebSocket endpoint.
+    const client = new ethers.providers.WebSocketProvider(config.wss);
+    logger.info(`✅ Connection created. Endpoint = ${config.wss}`);
 
-  client._websocket.on("open", () =>
-    setInterval(() => client._websocket.ping(), 5000)
-  );
+    // Listen for hangups, and restart the connection.
+    client._websocket.on("close", () => {
+      logger.info("❎ Connection closed. Retrying ...");
+      client._websocket.terminate();
 
-  // Subscribe to new blocks.
-  client.on("block", async (height: number) => {
-    const block = await client.getBlockWithTransactions(height);
+      main();
+    });
 
-    if (block.transactions.length) {
-      block.transactions.forEach(
-        // @ts-ignore
-        (transaction) => delete transaction.confirmations
-      );
-    }
+    // Subscribe to new blocks.
+    client.on("block", async (height: number) => {
+      const block = await client.getBlockWithTransactions(height);
 
-    const tags = [
-      { name: "Block", value: block.hash },
-      { name: "Height", value: block.number.toString() },
-    ];
-    if (block.transactions.length) {
-      block.transactions.forEach((transaction) =>
-        tags.push({
-          name: "Transaction",
-          value: transaction.hash,
-        })
-      );
-    }
+      if (block.transactions.length) {
+        block.transactions.forEach(
+          // @ts-ignore
+          (transaction) => delete transaction.confirmations
+        );
+      }
 
-    uploader.upload({ data: JSON.stringify(block), tags });
-  });
+      const tags = [
+        { name: "Block", value: block.hash },
+        { name: "Height", value: block.number.toString() },
+      ];
+      if (block.transactions.length) {
+        block.transactions.forEach((transaction) =>
+          tags.push({
+            name: "Transaction",
+            value: transaction.hash,
+          })
+        );
+      }
+
+      uploader.upload({ data: JSON.stringify(block), tags });
+    });
+  };
+
+  main();
 };
 
 export default uploadFunction;
