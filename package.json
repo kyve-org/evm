@@ -1,6 +1,6 @@
 {
   "name": "@kyve/evm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
@@ -9,7 +9,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kyve/core": "^0.1.0",
+    "@kyve/core": "^0.1.1",
     "ethers": "^5.5.1",
     "object-hash": "^2.2.0"
   },
