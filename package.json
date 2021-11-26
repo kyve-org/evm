@@ -9,13 +9,11 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kyve/core": "^0.1.0",
-    "ethers": "^5.5.1",
-    "object-hash": "^2.2.0"
+    "@kyve/core": "KYVENetwork/core#kyve-chain",
+    "ethers": "^5.5.1"
   },
   "devDependencies": {
     "@types/node": "^16.10.3",
-    "@types/object-hash": "^2.2.1",
     "pkg": "^5.3.3",
     "prettier": "^2.4.1",
     "tslog": "^3.2.2",
