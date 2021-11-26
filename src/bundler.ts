@@ -18,6 +18,7 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   const waitForBlock = async (height: number): Promise<void> => {
     return new Promise(async (resolve) => {
       let currentHeight = await provider.getBlockNumber();
+
       while (currentHeight < height) {
         await sleep(10 * 1000);
         currentHeight = await provider.getBlockNumber();
@@ -28,6 +29,7 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   };
 
   await waitForBlock(toHeight);
+
   for (let height = fromHeight; height < toHeight; height++) {
     const block = await provider.getBlockWithTransactions(height);
 
