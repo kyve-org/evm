@@ -30,6 +30,14 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   await waitForBlock(toHeight);
   for (let height = fromHeight; height < toHeight; height++) {
     const block = await provider.getBlockWithTransactions(height);
+
+    if (block.transactions.length) {
+      block.transactions.forEach(
+        // @ts-ignore
+        (transaction) => delete transaction.confirmations
+      );
+    }
+
     bundle.push(block);
   }
 
