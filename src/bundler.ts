@@ -1,5 +1,6 @@
 import { BlockWithTransactions } from "@ethersproject/abstract-provider";
 import { BundlerFunction } from "@kyve/core/dist/src/faces";
+import cliProgress from "cli-progress";
 import { ethers } from "ethers";
 import { ConfigType } from "./faces";
 
@@ -30,6 +31,10 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
 
   await waitForBlock(toHeight);
 
+  const progress = new cliProgress.SingleBar({
+    format: `[{bar}] {percentage}% | {value}/{total}`,
+  });
+  progress.start(toHeight - fromHeight, 0);
   for (let height = fromHeight; height < toHeight; height++) {
     const block = await provider.getBlockWithTransactions(height);
 
@@ -41,7 +46,9 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
     }
 
     bundle.push(block);
+    progress.increment();
   }
+  progress.stop();
 
   return bundle;
 };
