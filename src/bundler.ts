@@ -15,7 +15,7 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   toHeight
 ) => {
   const bundle: BlockWithTransactions[] = [];
-  const provider = new ethers.providers.StaticJsonRpcProvider(config.rpc);
+  const provider = new ethers.providers.JsonRpcBatchProvider(config.rpc);
 
   const waitForBlock = async (height: number): Promise<void> => {
     return new Promise(async (resolve) => {
@@ -40,19 +40,25 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
     )} [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} blocks`,
   });
   progress.start(toHeight - fromHeight, 0);
+
+  const promises = [];
   for (let height = fromHeight; height < toHeight; height++) {
-    const block = await provider.getBlockWithTransactions(height);
+    promises.push(
+      provider.getBlockWithTransactions(height).then((block) => {
+        if (block.transactions.length) {
+          block.transactions.forEach(
+            // @ts-ignore
+            (transaction) => delete transaction.confirmations
+          );
+        }
 
-    if (block.transactions.length) {
-      block.transactions.forEach(
-        // @ts-ignore
-        (transaction) => delete transaction.confirmations
-      );
-    }
-
-    bundle.push(block);
-    progress.increment();
+        bundle.push(block);
+        progress.increment();
+      })
+    );
   }
+
+  await Promise.all(promises);
   progress.stop();
 
   return bundle;
