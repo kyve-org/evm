@@ -15,7 +15,7 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   toHeight
 ) => {
   const bundle: BlockWithTransactions[] = [];
-  const provider = new ethers.providers.JsonRpcBatchProvider(config.rpc);
+  const provider = new ethers.providers.StaticJsonRpcProvider(config.rpc);
 
   const waitForBlock = async (height: number): Promise<void> => {
     return new Promise(async (resolve) => {
@@ -60,6 +60,8 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
 
   await Promise.all(promises);
   progress.stop();
+
+  bundle.sort((a, b) => b.number - a.number);
 
   return bundle;
 };
