@@ -30,6 +30,7 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
     });
   };
 
+  // TODO: Catch `eth_blockNumber` call.
   await waitForBlock(toHeight);
 
   const progress = new cliProgress.SingleBar({
@@ -44,18 +45,32 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   const promises = [];
   for (let height = fromHeight; height < toHeight; height++) {
     promises.push(
-      provider.getBlockWithTransactions(height).then((block) => {
-        if (block.transactions.length) {
-          block.transactions.forEach(
-            // @ts-ignore
-            (transaction) => delete transaction.confirmations
-          );
+      new Promise<void>(async (resolve) => {
+        let success = false;
+
+        while (!success) {
+          try {
+            const block = await provider.getBlockWithTransactions(height);
+
+            if (block.transactions.length) {
+              block.transactions.forEach(
+                // @ts-ignore
+                (transaction) => delete transaction.confirmations
+              );
+            }
+
+            bundle.push(block);
+            success = true;
+          } catch {}
         }
 
-        bundle.push(block);
         progress.increment();
+        resolve();
       })
     );
+
+    // TODO: Can we make this dynamic?
+    await sleep(10);
   }
 
   await Promise.all(promises);
