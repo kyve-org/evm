@@ -1,6 +1,6 @@
 import KYVE from "@kyve/core";
-import { version } from "../package.json";
 import bundler from "./bundler";
+import { version } from "../package.json";
 
 process.env.KYVE_RUNTIME = "@kyve/evm";
 process.env.KYVE_VERSION = version;

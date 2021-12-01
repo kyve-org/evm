@@ -2,12 +2,7 @@ import { BlockWithTransactions } from "@ethersproject/abstract-provider";
 import { BundlerFunction } from "@kyve/core/dist/src/faces";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
-import { ethers } from "ethers";
-import { ConfigType } from "./faces";
-
-const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
+import { ConfigType, Provider, sleep } from "./utils";
 
 const bundlerFunction: BundlerFunction<ConfigType> = async (
   config,
@@ -15,22 +10,21 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   toHeight
 ) => {
   const bundle: BlockWithTransactions[] = [];
-  const provider = new ethers.providers.StaticJsonRpcProvider(config.rpc);
+  const provider = new Provider(config.rpc);
 
   const waitForBlock = async (height: number): Promise<void> => {
     return new Promise(async (resolve) => {
-      let currentHeight = await provider.getBlockNumber();
+      let currentHeight = await provider.safeGetBlockNumber();
 
       while (currentHeight < height) {
         await sleep(10 * 1000);
-        currentHeight = await provider.getBlockNumber();
+        currentHeight = await provider.safeGetBlockNumber();
       }
 
       resolve();
     });
   };
 
-  // TODO: Catch `eth_blockNumber` call.
   await waitForBlock(toHeight);
 
   const progress = new cliProgress.SingleBar({
@@ -45,27 +39,9 @@ const bundlerFunction: BundlerFunction<ConfigType> = async (
   const promises = [];
   for (let height = fromHeight; height < toHeight; height++) {
     promises.push(
-      new Promise<void>(async (resolve) => {
-        let success = false;
-
-        while (!success) {
-          try {
-            const block = await provider.getBlockWithTransactions(height);
-
-            if (block.transactions.length) {
-              block.transactions.forEach(
-                // @ts-ignore
-                (transaction) => delete transaction.confirmations
-              );
-            }
-
-            bundle.push(block);
-            success = true;
-          } catch {}
-        }
-
+      provider.safeGetBlockWithTransactions(height).then((block) => {
+        bundle.push(block);
         progress.increment();
-        resolve();
       })
     );
 
