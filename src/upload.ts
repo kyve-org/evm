@@ -17,6 +17,10 @@ const uploadFunction = (
     const client = new ethers.providers.WebSocketProvider(config.wss);
     logger.info(`✅ Connection created. Endpoint = ${config.wss}`);
 
+    client._websocket.on("open", () => {
+      setInterval(() => client._websocket.ping(), 5000);
+    });
+
     // Listen for hangups, and restart the connection.
     client._websocket.on("close", () => {
       logger.info("❎ Connection closed. Retrying ...");
