@@ -1,10 +1,10 @@
 import { BlockWithTransactions } from "@ethersproject/abstract-provider";
-import { BundlerFunction } from "@kyve/core/dist/src/faces";
+import { BundleFunction } from "@kyve/core/dist/src/faces";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
 import { ConfigType, Provider, sleep } from "./utils";
 
-const bundlerFunction: BundlerFunction<ConfigType> = async (
+const bundlerFunction: BundleFunction<ConfigType> = async (
   config,
   fromHeight,
   toHeight
