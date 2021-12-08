@@ -4,8 +4,6 @@ import {
 } from "@ethersproject/abstract-provider";
 import { StaticJsonRpcProvider } from "@ethersproject/providers";
 
-export type ConfigType = { rpc: string; wss: string };
-
 export const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
