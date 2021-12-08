@@ -1,8 +1,14 @@
-import { BlockWithTransactions } from "@ethersproject/abstract-provider";
-import { BundleFunction } from "@kyve/core/dist/src/faces";
+import {BlockWithTransactions} from "@ethersproject/abstract-provider";
+import {BundleFunction} from "@kyve/core/dist/src/faces";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
-import { ConfigType, Provider, sleep } from "./utils";
+import {ConfigType, Provider, sleep} from "./utils";
+import {client as metricClient} from "@kyve/core/dist/src/registry";
+
+const gauge = new metricClient.Gauge({
+  name: 'current_bundle_size',
+  help: 'The size of the current bundle to be validated'
+})
 
 const bundlerFunction: BundleFunction<ConfigType> = async (
   config,
@@ -41,6 +47,7 @@ const bundlerFunction: BundleFunction<ConfigType> = async (
     promises.push(
       provider.safeGetBlockWithTransactions(height).then((block) => {
         bundle.push(block);
+        gauge.set(bundle.length);
         progress.increment();
       })
     );
