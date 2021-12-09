@@ -6,6 +6,18 @@ import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { BlockInstructions } from "@kyve/core/dist/src/faces";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
+import { client } from "@kyve/core/dist/src/metrics";
+
+// Metric collectors
+const gauge = new client.Gauge({
+  name: "current_bundle_size",
+  help: "The size of the current bundle to be validated.",
+});
+
+const counter = new client.Counter({
+  name: "total_bundles_submitted",
+  help: "The total count of bundles submitted by this node.",
+});
 
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -86,6 +98,7 @@ export const createEVMBundle = async (
     promises.push(
       provider.safeGetBlockWithTransactions(height).then((block) => {
         bundle.push(block);
+        gauge.set(bundle.length);
         progress.increment();
       })
     );
@@ -100,5 +113,6 @@ export const createEVMBundle = async (
 
   bundle.sort((a, b) => b.number - a.number);
 
+  counter.inc();
   return bundle;
 };
