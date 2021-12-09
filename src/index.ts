@@ -15,6 +15,4 @@ class EVM extends KYVE {
   }
 }
 
-(async () => {
-  new EVM().start();
-})();
+new EVM().start();
