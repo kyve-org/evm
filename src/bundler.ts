@@ -3,11 +3,17 @@ import {BundleFunction} from "@kyve/core/dist/src/faces";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
 import {ConfigType, Provider, sleep} from "./utils";
-import {client as metricClient} from "@kyve/core/dist/src/registry";
+import {client} from "@kyve/core/dist/src/metrics";
 
-const gauge = new metricClient.Gauge({
+// Metric collectors
+const gauge = new client.Gauge({
   name: 'current_bundle_size',
-  help: 'The size of the current bundle to be validated'
+  help: 'The size of the current bundle to be validated.'
+})
+
+const counter = new client.Counter({
+  name: 'total_bundles_submitted',
+  help: 'The total count of bundles submitted by this node.'
 })
 
 const bundlerFunction: BundleFunction<ConfigType> = async (
@@ -61,6 +67,7 @@ const bundlerFunction: BundleFunction<ConfigType> = async (
 
   bundle.sort((a, b) => b.number - a.number);
 
+  counter.inc()
   return bundle;
 };
 

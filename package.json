@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-x64,latest-macos-x64,latest-win-x64 --out-path out",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
@@ -19,6 +19,7 @@
     "@types/node": "^16.10.3",
     "pkg": "^5.3.3",
     "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
     "tslog": "^3.2.2",
     "typescript": "^4.4.3",
     "webhook-discord": "^3.7.8"
