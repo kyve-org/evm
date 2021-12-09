@@ -9,12 +9,12 @@ import chalk from "chalk";
 import KYVE from "@kyve/core";
 
 // Metric collectors
-const gauge = new KYVE.metricClient.Gauge({
+const gauge = new KYVE.metrics.Gauge({
   name: "current_bundle_size",
   help: "The size of the current bundle to be validated.",
 });
 
-const counter = new KYVE.metricClient.Counter({
+const counter = new KYVE.metrics.Counter({
   name: "total_bundles_submitted",
   help: "The total count of bundles submitted by this node.",
 });

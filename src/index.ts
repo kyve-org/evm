@@ -6,7 +6,7 @@ import { BlockInstructions } from "@kyve/core/dist/src/faces";
 process.env.KYVE_RUNTIME = "@kyve/evm";
 process.env.KYVE_VERSION = version;
 
-KYVE.metricClient.register.setDefaultLabels({
+KYVE.metrics.register.setDefaultLabels({
   app: process.env.KYVE_RUNTIME,
 });
 
