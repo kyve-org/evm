@@ -361,27 +361,9 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@KYVENetwork/core#feature/metric":
-  version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/d3bfc938f407b7aabef8ca66d7789b2f0b7b248c"
-  dependencies:
-    arweave "^1.10.17"
-    base64url "^3.0.1"
-    bignumber.js "^9.0.1"
-    commander "^8.3.0"
-    ethers "^5.5.1"
-    graphql "^16.0.1"
-    graphql-request "^3.6.1"
-    object-hash "^2.2.0"
-    prando "^6.0.1"
-    prom-client "^14.0.1"
-    semver "^7.3.5"
-    tslog "^3.2.2"
-    unique-names-generator "^4.6.0"
-
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/92f060c97d5d2421720731a1fa5b07db699897fd"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/18422b30ac4f0fa41b6612401fd506c06a5294cd"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"

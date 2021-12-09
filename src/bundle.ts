@@ -6,15 +6,15 @@ import { StaticJsonRpcProvider } from "@ethersproject/providers";
 import { BlockInstructions } from "@kyve/core/dist/src/faces";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
-import { client } from "@kyve/core/dist/src/metrics";
+import KYVE from "@kyve/core";
 
 // Metric collectors
-const gauge = new client.Gauge({
+const gauge = new KYVE.metricClient.Gauge({
   name: "current_bundle_size",
   help: "The size of the current bundle to be validated.",
 });
 
-const counter = new client.Counter({
+const counter = new KYVE.metricClient.Counter({
   name: "total_bundles_submitted",
   help: "The total count of bundles submitted by this node.",
 });
