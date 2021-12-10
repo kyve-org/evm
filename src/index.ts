@@ -27,8 +27,10 @@ class EVM extends KYVE {
         try {
           workerHeight = await this.db.get(-1);
         } catch {
-          await this.db.put(-1, 0);
-          workerHeight = 0;
+          const startHeight = this.poolState.startHeight;
+
+          await this.db.put(-1, startHeight);
+          workerHeight = startHeight;
         }
 
         for (
@@ -50,6 +52,9 @@ class EVM extends KYVE {
 
         await this.db.batch(batch);
         await this.db.put(-1, workerHeight + batchSize);
+        KYVE.logger.debug(
+          `Saved batch to db. Worker height = ${workerHeight + batchSize}`
+        );
         await sleep(rateLimit * 10);
       } catch (error) {
         sleep(10 * 1000);
@@ -89,9 +94,14 @@ class EVM extends KYVE {
           break;
         }
       } catch {
+        KYVE.logger.debug(
+          `Could not fetch block at height = ${currentHeight}. Waiting ...`
+        );
         sleep(10 * 1000);
       }
     }
+
+    KYVE.logger.debug(`Created bundle with length = ${bundle.length}`);
 
     return bundle;
   }
