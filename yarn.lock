@@ -363,15 +363,13 @@
 
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/f18bf9a21929025069d9e7fbcb2fc9b5c4485ce2"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/3bbe695a5bbd6b33b90df889b93512aa235639b8"
   dependencies:
     arweave "^1.10.17"
     base64url "^3.0.1"
     bignumber.js "^9.0.1"
     commander "^8.3.0"
     ethers "^5.5.1"
-    graphql "^16.0.1"
-    graphql-request "^3.6.1"
     level "^7.0.1"
     object-hash "^2.2.0"
     prando "^6.0.1"
