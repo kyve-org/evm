@@ -21,43 +21,51 @@ class EVM extends KYVE {
       try {
         const provider = new SafeProvider(this.poolState.config.rpc);
         const batch: any[] = [];
+        const promises: any[] = [];
 
         let workerHeight;
 
         try {
           workerHeight = await this.db.get(-1);
         } catch {
-          const startHeight = this.poolState.startHeight;
+          const poolHeight = this.poolState.height.toNumber();
 
-          await this.db.put(-1, startHeight);
-          workerHeight = startHeight;
+          await this.db.put(-1, poolHeight);
+          workerHeight = poolHeight;
         }
 
+        KYVE.logger.debug(`Worker height = ${workerHeight}`);
+
         for (
-          let height = workerHeight;
-          height < workerHeight + batchSize;
+          let height = +workerHeight;
+          height < +workerHeight + batchSize;
           height++
         ) {
-          batch.push(provider.safeGetBlockWithTransactions(height));
+          promises.push(
+            provider.safeGetBlockWithTransactions(height).then((block) => {
+              batch.push(block);
+            })
+          );
           await sleep(rateLimit);
         }
 
-        await Promise.all(batch);
+        await Promise.all(promises);
 
-        batch.map((b) => ({
-          type: "put",
-          key: b.number,
-          value: b,
-        }));
-
-        await this.db.batch(batch);
-        await this.db.put(-1, workerHeight + batchSize);
+        await this.db.batch(
+          batch.map((b) => ({
+            type: "put",
+            key: +b.number,
+            value: JSON.stringify(b),
+          }))
+        );
+        await this.db.put(-1, +workerHeight + batchSize);
         KYVE.logger.debug(
-          `Saved batch to db. Worker height = ${workerHeight + batchSize}`
+          `Saved batch to db. Worker height = ${+workerHeight + batchSize}`
         );
         await sleep(rateLimit * 10);
       } catch (error) {
-        sleep(10 * 1000);
+        KYVE.logger.error("Error fetching data batch", error);
+        await sleep(10 * 1000);
       }
     }
   }
@@ -85,19 +93,24 @@ class EVM extends KYVE {
       try {
         const block = await this.db.get(currentHeight);
 
-        currentDataSize += KYVE.dataSizeOfString(JSON.stringify(block));
+        currentDataSize += KYVE.dataSizeOfString(block);
         currentHeight += 1;
 
         if (currentDataSize <= bundleDataSizeLimit) {
           bundle.push(block);
+          progress.update(currentDataSize);
         } else {
+          progress.stop();
           break;
         }
       } catch {
         KYVE.logger.debug(
-          `Could not fetch block at height = ${currentHeight}. Waiting ...`
+          `Could not fetch block at height = ${currentHeight} - ${(
+            (currentDataSize * 100) /
+            bundleDataSizeLimit
+          ).toFixed(2)}%. Waiting ...`
         );
-        sleep(10 * 1000);
+        await sleep(10 * 1000);
       }
     }
 
