@@ -1,4 +1,4 @@
-import KYVE, { BlockInstructions, logger } from "@kyve/core";
+import KYVE, { BlockInstructions, formatBundle, logger } from "@kyve/core";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import path from "path";
@@ -70,7 +70,8 @@ class EVM extends KYVE {
     while (true) {
       try {
         const block = await this.db.get(currentHeight);
-        currentDataSize += block.byteLength;
+        const tempBundle = bundle.concat(block);
+        currentDataSize = formatBundle(tempBundle).byteLength;
 
         if (currentDataSize <= bundleDataSizeLimit) {
           bundle.push(block);
