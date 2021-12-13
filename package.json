@@ -9,7 +9,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kyve/core": "KYVENetwork/core#feat/protobuf",
+    "@kyve/core": "KYVENetwork/core#kyve-chain",
     "@types/cli-progress": "^3.9.2",
     "chalk": "^4.0.0",
     "cli-progress": "^3.9.1",
