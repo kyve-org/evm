@@ -13,7 +13,7 @@ KYVE.metrics.register.setDefaultLabels({
 
 class EVM extends KYVE {
   public async requestWorkerBatch(workerHeight: number): Promise<any[]> {
-    const batchSize = 10;
+    const batchSize = 100;
     const rateLimit = 10;
 
     const provider = new SafeProvider(this.poolState.config.rpc);
@@ -40,7 +40,7 @@ class EVM extends KYVE {
   public async createBundle(
     blockInstructions: BlockInstructions
   ): Promise<any[]> {
-    const bundleDataSizeLimit = 50 * 1000 * 1000; // 50 MB
+    const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
     const bundle: any[] = [];
 
     const progress = new cliProgress.SingleBar({
@@ -48,7 +48,7 @@ class EVM extends KYVE {
         new Date().toISOString().replace("T", " ").replace("Z", " ")
       )} ${chalk.bold.blueBright(
         "INFO"
-      )} [{bar}] {percentage}% | ETA: {eta}s | {value}/{total} bytes`,
+      )} [{bar}] {percentage}% | {value}/{total} bytes`,
     });
 
     progress.start(bundleDataSizeLimit, 0);
@@ -76,6 +76,7 @@ class EVM extends KYVE {
     }
 
     logger.debug(`Created bundle with length = ${bundle.length}`);
+    logger.debug(`Worker height = ${await this.db.get(-1)}`);
 
     return bundle;
   }
