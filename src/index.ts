@@ -76,7 +76,11 @@ class EVM extends KYVE {
     }
 
     logger.debug(`Created bundle with length = ${bundle.length}`);
-    logger.debug(`Worker height = ${await this.db.get(-1)}`);
+    try {
+      logger.debug(`Worker height = ${await this.db.get(-1)}`);
+    } catch (err) {
+      logger.debug(`Worker height = ${0}`);
+    }
 
     return bundle;
   }
