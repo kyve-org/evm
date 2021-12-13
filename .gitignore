@@ -4,6 +4,7 @@ out
 arweave.json
 logs
 .env
+db
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudio,macos,windows,node,webstorm+all

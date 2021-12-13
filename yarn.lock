@@ -363,12 +363,14 @@
 
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/3af2e8644a52c9a1f9b56ba7df80a5a397d2f182"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/7086352cbcb85e6e60ecbb97e030da8a4af17b96"
   dependencies:
+    "@types/du" "^1.0.1"
     arweave "^1.10.17"
     base64url "^3.0.1"
     bignumber.js "^9.0.1"
     commander "^8.3.0"
+    du "^1.0.0"
     ethers "^5.5.1"
     level "^7.0.1"
     object-hash "^2.2.0"
@@ -405,6 +407,11 @@
   integrity sha512-VO5/X5Ij+oVgEVjg5u0IXVe3JQSKJX+Ev8C5x+0hPy0AuWyW+bF8tbajR7cPFnDGhs7pidztcac+ccrDtk5teA==
   dependencies:
     "@types/node" "*"
+
+"@types/du@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/du/-/du-1.0.1.tgz#ed8bf4a0dab2ec0354fd4ccdd168b3c7d35cd326"
+  integrity sha512-vwNP+pzkI1ipznek2fCA4xj1kQyL9EJcfdBezD9eToe9eP2IgT3WLEBrVqiXal34LOyiAs8xCQKwugEYOKcMkw==
 
 "@types/node@*":
   version "16.11.12"
@@ -727,6 +734,13 @@ dir-glob@^3.0.1:
   integrity sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
   dependencies:
     path-type "^4.0.0"
+
+du@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/du/-/du-1.0.0.tgz#f33b8d0c3944f7db78bdd6f2105c637a91f25b03"
+  integrity sha512-w00+6XpIq924IvDLyOOx5HFO4KwH6YV6buqFx6og/ErTaJ34kVOyI+Q2f+X8pvZkDoEgT6xspA4iYSN99mqPDA==
+  dependencies:
+    map-async "~0.1.1"
 
 elliptic@6.5.4:
   version "6.5.4"
@@ -1207,6 +1221,11 @@ ltgt@^2.1.2:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ltgt/-/ltgt-2.2.1.tgz#f35ca91c493f7b73da0e07495304f17b31f87ee5"
   integrity sha1-81ypHEk/e3PaDgdJUwTxezH4fuU=
+
+map-async@~0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/map-async/-/map-async-0.1.1.tgz#c897c0449f85864c74b5a3f196edb42156431745"
+  integrity sha1-yJfARJ+Fhkx0taPxlu20IVZDF0U=
 
 merge2@^1.3.0:
   version "1.4.1"

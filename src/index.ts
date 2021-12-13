@@ -1,6 +1,6 @@
 import KYVE, { BlockInstructions, dataSizeOfString, logger } from "@kyve/core";
 import { version } from "../package.json";
-import { SafeProvider, sleep } from "./worker";
+import { SafeProvider, sleep } from "./provider";
 import cliProgress from "cli-progress";
 import chalk from "chalk";
 
@@ -12,59 +12,29 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
-  public async worker() {
+  public async requestWorkerBatch(workerHeight: number): Promise<any[]> {
     const batchSize = 10;
     const rateLimit = 10;
 
-    while (true) {
-      try {
-        const provider = new SafeProvider(this.poolState.config.rpc);
-        const batch: any[] = [];
+    const provider = new SafeProvider(this.poolState.config.rpc);
+    const promises: any[] = [];
 
-        let workerHeight;
-
-        try {
-          workerHeight = await this.db.get(-1);
-        } catch {
-          workerHeight = this.poolState.height.toNumber();
-        }
-
-        logger.debug(`Worker height = ${workerHeight}`);
-
-        for (
-          let height = workerHeight;
-          height < workerHeight + batchSize;
-          height++
-        ) {
-          batch.push(provider.safeGetBlockWithTransactions(height));
-          await sleep(rateLimit);
-        }
-
-        const ops = [
-          ...(await Promise.all(batch)).map((b) => ({
-            type: "put",
-            key: b.number,
-            value: b,
-          })),
-          {
-            type: "put",
-            key: -1,
-            value: workerHeight + batchSize,
-          },
-        ];
-
-        await this.db.batch(ops);
-
-        logger.debug(
-          `Saved batch to db. Worker height = ${workerHeight + batchSize}`
-        );
-
-        await sleep(rateLimit * 10);
-      } catch (error) {
-        logger.error("Error fetching data batch", error);
-        await sleep(10 * 1000);
-      }
+    for (
+      let height = workerHeight;
+      height < workerHeight + batchSize;
+      height++
+    ) {
+      promises.push(provider.safeGetBlockWithTransactions(height));
+      await sleep(rateLimit);
     }
+
+    const batch = await Promise.all(promises);
+
+    return batch.map((b) => ({
+      type: "put",
+      key: b.number,
+      value: b,
+    }));
   }
 
   public async createBundle(
