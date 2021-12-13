@@ -1,8 +1,10 @@
-import KYVE, { BlockInstructions, dataSizeOfString, logger } from "@kyve/core";
-import { version } from "../package.json";
-import { SafeProvider, sleep } from "./provider";
-import cliProgress from "cli-progress";
+import KYVE, { BlockInstructions, logger } from "@kyve/core";
 import chalk from "chalk";
+import cliProgress from "cli-progress";
+import path from "path";
+import { loadSync, Type } from "protobufjs";
+import { SafeProvider, sleep } from "./provider";
+import { version } from "../package.json";
 
 process.env.KYVE_RUNTIME = "@kyve/evm";
 process.env.KYVE_VERSION = version;
@@ -12,6 +14,15 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
+  type: Type;
+
+  constructor() {
+    super();
+
+    const root = loadSync(path.join(__dirname, "schema.proto"));
+    this.type = root.lookupType("Block");
+  }
+
   public async requestWorkerBatch(workerHeight: number): Promise<any[]> {
     const batchSize = 100;
     const rateLimit = 10;
@@ -33,7 +44,7 @@ class EVM extends KYVE {
     return batch.map((b) => ({
       type: "put",
       key: b.number,
-      value: b,
+      value: this.type.encode(b).finish(),
     }));
   }
 
@@ -59,8 +70,7 @@ class EVM extends KYVE {
     while (true) {
       try {
         const block = await this.db.get(currentHeight);
-
-        currentDataSize += dataSizeOfString(JSON.stringify(block));
+        currentDataSize += block.byteLength;
 
         if (currentDataSize <= bundleDataSizeLimit) {
           bundle.push(block);
