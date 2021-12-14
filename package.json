@@ -9,7 +9,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@kyve/core": "^0.1.1",
+    "@kyve/core": "^0.1.3",
     "ethers": "^5.5.1",
     "object-hash": "^2.2.0"
   },

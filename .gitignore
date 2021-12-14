@@ -5,3 +5,4 @@ arweave.json
 logs
 .env
 .DS_Store
+db
