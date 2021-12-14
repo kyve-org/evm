@@ -361,27 +361,9 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@KYVENetwork/core#feat/protobuf":
-  version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/3ce9a4ded28aeb9474321b5a85170e890f3fedec"
-  dependencies:
-    arweave "^1.10.17"
-    base64url "^3.0.1"
-    bignumber.js "^9.0.1"
-    commander "^8.3.0"
-    ethers "^5.5.1"
-    graphql "^16.0.1"
-    graphql-request "^3.6.1"
-    object-hash "^2.2.0"
-    prando "^6.0.1"
-    prom-client "^14.0.1"
-    semver "^7.3.5"
-    tslog "^3.2.2"
-    unique-names-generator "^4.6.0"
-
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/22b1f471c9f77b6b103df930f3dec964c5e1dcf9"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/7cf43f7c97b19cde964ea5cd7c9800f2f5b65193"
   dependencies:
     "@types/du" "^1.0.1"
     arweave "^1.10.17"

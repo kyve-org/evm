@@ -70,8 +70,7 @@ class EVM extends KYVE {
     while (true) {
       try {
         const block = await this.db.get(currentHeight);
-        const tempBundle = bundle.concat(block);
-        currentDataSize = formatBundle(tempBundle).byteLength;
+        currentDataSize += block.byteLength + 32;
 
         if (currentDataSize <= bundleDataSizeLimit) {
           bundle.push(block);
@@ -87,11 +86,6 @@ class EVM extends KYVE {
     }
 
     logger.debug(`Created bundle with length = ${bundle.length}`);
-    try {
-      logger.debug(`Worker height = ${await this.db.get(-1)}`);
-    } catch (err) {
-      logger.debug(`Worker height = ${0}`);
-    }
 
     return bundle;
   }
