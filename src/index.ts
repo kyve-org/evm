@@ -35,7 +35,11 @@ class EVM extends KYVE {
       height < workerHeight + batchSize;
       height++
     ) {
-      promises.push(provider.safeGetBlockWithTransactions(height));
+      promises.push(
+        provider
+          .safeGetBlockWithTransactions(height)
+          .then((block) => console.log(block.number))
+      );
       await sleep(rateLimit);
     }
 

@@ -1,47 +1,46 @@
 syntax = "proto3";
 
-import "google/protobuf/any.proto";
+// import "google/protobuf/any.proto";
 
-message BigNumber {
-  string type = 1;
-  string hex = 2;
-}
+import "kyve/protobuf/big_number.proto";
 
 message Transaction {
+  // option (kyve.protobuf.primary_key_field) = "hash";
   string hash = 1;
   uint32 type = 2;
-  repeated google.protobuf.Any accessList = 3;
+  // repeated google.protobuf.Any accessList = 3;
   string blockHash = 4;
   uint32 blockNumber = 5;
   uint32 transactionIndex = 6;
   string from = 7;
-  BigNumber gasPrice = 8;
-  BigNumber maxPriorityFeePerGas = 9;
-  BigNumber maxFeePerGas = 10;
-  BigNumber gasLimit = 11;
+  kyve.protobuf.BigNumber gasPrice = 8;
+  kyve.protobuf.BigNumber maxPriorityFeePerGas = 9;
+  kyve.protobuf.BigNumber maxFeePerGas = 10;
+  kyve.protobuf.BigNumber gasLimit = 11;
   string to = 12;
-  BigNumber value = 13;
+  kyve.protobuf.BigNumber value = 13;
   uint32 nonce = 14;
   string data = 15;
   string r = 16;
   string s = 17;
   uint32 v = 18;
-  google.protobuf.Any creates = 19;
+  // google.protobuf.Any creates = 19;
   uint32 chainId = 20;
 }
 
 message Block {
+  // option (kyve.protobuf.primary_key_field) = "hash";
   string hash = 1;
   string parentHash = 2;
   uint32 number = 3;
   uint32 timestamp = 4;
   string nonce = 5;
   uint32 difficulty = 6;
-  BigNumber gasLimit = 7;
-  BigNumber gasUsed = 8;
+  kyve.protobuf.BigNumber gasLimit = 7;
+  kyve.protobuf.BigNumber gasUsed = 8;
   string miner = 9;
   string extraData = 10;
   repeated Transaction transactions = 11;
-  BigNumber baseFeePerGas = 12;
-  BigNumber _difficulty = 13;
+  kyve.protobuf.BigNumber baseFeePerGas = 12;
+  // kyve.BigNumber _difficulty = 13;
 }
