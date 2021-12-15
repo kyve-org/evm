@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && copyfiles './src/schema.proto' ./dist && copyfiles './kyve/**/*' ./dist && tsc",
+    "build": "rimraf dist && copyfiles './src/schema.proto' ./dist && copyfiles './kyve/**/*' ./dist/src && tsc",
     "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-x64,latest-macos-x64,latest-win-x64 --out-path out",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
