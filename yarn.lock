@@ -363,7 +363,7 @@
 
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/7cf43f7c97b19cde964ea5cd7c9800f2f5b65193"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/5f8d6552be31478b97d56e4431ef996ea1409197"
   dependencies:
     "@types/du" "^1.0.1"
     arweave "^1.10.17"

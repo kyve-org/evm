@@ -1,4 +1,4 @@
-import KYVE, { BlockInstructions, formatBundle, logger } from "@kyve/core";
+import KYVE, { BlockInstructions, logger } from "@kyve/core";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import path from "path";
@@ -35,11 +35,7 @@ class EVM extends KYVE {
       height < workerHeight + batchSize;
       height++
     ) {
-      promises.push(
-        provider
-          .safeGetBlockWithTransactions(height)
-          .then((block) => console.log(block.number))
-      );
+      promises.push(provider.safeGetBlockWithTransactions(height));
       await sleep(rateLimit);
     }
 
@@ -55,8 +51,12 @@ class EVM extends KYVE {
   public async createBundle(
     blockInstructions: BlockInstructions
   ): Promise<any[]> {
-    const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
+    const bundleDataSizeLimit = 5 * 1000 * 1000; // 5 MB
     const bundle: any[] = [];
+
+    logger.debug(
+      `Creating bundle from height = ${blockInstructions.fromHeight} ...`
+    );
 
     const progress = new cliProgress.SingleBar({
       format: `${chalk.gray(
