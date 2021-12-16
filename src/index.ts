@@ -52,6 +52,7 @@ class EVM extends KYVE {
     bundleInstructions: BundleInstructions
   ): Promise<Buffer[]> {
     const bundleDataSizeLimit = 5 * 1000 * 1000; // 5 MB
+    const bundleItemSizeLimit = 10000;
     const bundle: Buffer[] = [];
 
     logger.debug(
@@ -76,7 +77,10 @@ class EVM extends KYVE {
         const block = await this.db.get(currentHeight);
         currentDataSize += block.byteLength + 32;
 
-        if (currentDataSize <= bundleDataSizeLimit) {
+        if (
+          currentDataSize <= bundleDataSizeLimit &&
+          bundle.length <= bundleItemSizeLimit
+        ) {
           bundle.push(block);
           currentHeight += 1;
           progress.update(currentDataSize);
