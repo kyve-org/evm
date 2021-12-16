@@ -1,4 +1,4 @@
-import KYVE, { BlockInstructions, logger } from "@kyve/core";
+import KYVE, { BundleInstructions, logger } from "@kyve/core";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import path from "path";
@@ -49,13 +49,13 @@ class EVM extends KYVE {
   }
 
   public async createBundle(
-    blockInstructions: BlockInstructions
+    bundleInstructions: BundleInstructions
   ): Promise<any[]> {
     const bundleDataSizeLimit = 5 * 1000 * 1000; // 5 MB
     const bundle: any[] = [];
 
     logger.debug(
-      `Creating bundle from height = ${blockInstructions.fromHeight} ...`
+      `Creating bundle from height = ${bundleInstructions.fromHeight} ...`
     );
 
     const progress = new cliProgress.SingleBar({
@@ -69,7 +69,7 @@ class EVM extends KYVE {
     progress.start(bundleDataSizeLimit, 0);
 
     let currentDataSize = 0;
-    let currentHeight = blockInstructions.fromHeight;
+    let currentHeight = bundleInstructions.fromHeight;
 
     while (true) {
       try {
