@@ -78,8 +78,8 @@ class EVM extends KYVE {
         currentDataSize += block.byteLength + 32;
 
         if (
-          currentDataSize <= bundleDataSizeLimit &&
-          bundle.length <= bundleItemSizeLimit
+          currentDataSize < bundleDataSizeLimit &&
+          bundle.length < bundleItemSizeLimit
         ) {
           bundle.push(block);
           currentHeight += 1;
