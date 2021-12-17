@@ -45,7 +45,7 @@ class EVM extends KYVE {
 
     return batch.map((b) => ({
       type: "put",
-      key: b.number,
+      key: b.number.toString(),
       value: this.type
         .encode(this.type.create(JSON.parse(JSON.stringify(b))))
         .finish(),
@@ -78,7 +78,7 @@ class EVM extends KYVE {
 
     while (true) {
       try {
-        const block = await this.db.get(currentHeight);
+        const block = await this.db.get(currentHeight.toString());
         currentDataSize += block.byteLength + 32;
 
         if (
