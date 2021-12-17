@@ -28,13 +28,15 @@ class EVM extends KYVE {
     const rateLimit = 10;
 
     const provider = new SafeProvider(this.poolState.config.rpc);
+    const currentHeight = await provider.getBlockNumber();
     const promises: any[] = [];
 
-    for (
-      let height = workerHeight;
-      height < workerHeight + batchSize;
-      height++
-    ) {
+    const toHeight =
+      workerHeight + batchSize <= currentHeight
+        ? workerHeight + batchSize
+        : currentHeight;
+
+    for (let height = workerHeight; height < toHeight; height++) {
       promises.push(provider.safeGetBlockWithTransactions(height));
       await sleep(rateLimit);
     }
@@ -44,7 +46,7 @@ class EVM extends KYVE {
     return batch.map((b) => ({
       type: "put",
       key: b.number,
-      value: this.type.encode(b).finish(),
+      value: this.type.encode(JSON.parse(JSON.stringify(b))).finish(),
     }));
   }
 
