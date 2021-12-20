@@ -60,10 +60,6 @@ class EVM extends KYVE {
       `Creating bundle from height = ${bundleInstructions.fromHeight} ...`
     );
 
-    const progress = new Progress("blocks");
-
-    progress.start(bundleItemSizeLimit, 0);
-
     let currentDataSize = 0;
     let h = bundleInstructions.fromHeight;
 
@@ -77,7 +73,6 @@ class EVM extends KYVE {
           bundle.length < bundleItemSizeLimit
         ) {
           bundle.push(block);
-          progress.update(h);
           h += 1;
         } else {
           break;
@@ -90,8 +85,6 @@ class EVM extends KYVE {
         }
       }
     }
-
-    progress.stop();
 
     logger.debug(`Created bundle with length = ${bundle.length}`);
 
