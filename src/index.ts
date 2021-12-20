@@ -44,7 +44,6 @@ class EVM extends KYVE {
     const batch = await Promise.all(promises);
 
     return batch.map((b) => ({
-      type: "put",
       key: b.number.toString(),
       value: this.type
         .encode(this.type.create(JSON.parse(JSON.stringify(b))))
@@ -74,11 +73,11 @@ class EVM extends KYVE {
     progress.start(bundleDataSizeLimit, 0);
 
     let currentDataSize = 0;
-    let currentHeight = bundleInstructions.fromHeight;
+    let h = bundleInstructions.fromHeight;
 
     while (true) {
       try {
-        const block = await this.db.get(currentHeight.toString());
+        const block = await this.db.get(h.toString());
         currentDataSize += block.byteLength + 32;
 
         if (
@@ -86,7 +85,7 @@ class EVM extends KYVE {
           bundle.length < bundleItemSizeLimit
         ) {
           bundle.push(block);
-          currentHeight += 1;
+          h += 1;
           progress.update(currentDataSize);
         } else {
           progress.stop();
