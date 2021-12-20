@@ -77,7 +77,7 @@ class EVM extends KYVE {
 
     while (true) {
       try {
-        const block = await this.db.get(h.toString());
+        const block = await this.db.get(h);
         currentDataSize += block.byteLength + 32;
 
         if (
@@ -92,7 +92,12 @@ class EVM extends KYVE {
           break;
         }
       } catch {
-        await sleep(10 * 1000);
+        if (bundle.length) {
+          progress.stop();
+          break;
+        } else {
+          await sleep(10 * 1000);
+        }
       }
     }
 
