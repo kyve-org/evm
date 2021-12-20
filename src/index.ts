@@ -1,6 +1,4 @@
-import KYVE, { BundleInstructions, logger } from "@kyve/core";
-import chalk from "chalk";
-import cliProgress from "cli-progress";
+import KYVE, { BundleInstructions, logger, Progress } from "@kyve/core";
 import path from "path";
 import { loadSync, Type } from "protobufjs";
 import { SafeProvider, sleep } from "./provider";
@@ -62,15 +60,9 @@ class EVM extends KYVE {
       `Creating bundle from height = ${bundleInstructions.fromHeight} ...`
     );
 
-    const progress = new cliProgress.SingleBar({
-      format: `${chalk.gray(
-        new Date().toISOString().replace("T", " ").replace("Z", " ")
-      )} ${chalk.bold.blueBright(
-        "INFO"
-      )} [{bar}] {percentage}% | {value}/{total} bytes`,
-    });
+    const progress = new Progress("blocks");
 
-    progress.start(bundleDataSizeLimit, 0);
+    progress.start(bundleItemSizeLimit, 0);
 
     let currentDataSize = 0;
     let h = bundleInstructions.fromHeight;
@@ -85,21 +77,21 @@ class EVM extends KYVE {
           bundle.length < bundleItemSizeLimit
         ) {
           bundle.push(block);
+          progress.update(h);
           h += 1;
-          progress.update(currentDataSize);
         } else {
-          progress.stop();
           break;
         }
       } catch {
         if (bundle.length) {
-          progress.stop();
           break;
         } else {
           await sleep(10 * 1000);
         }
       }
     }
+
+    progress.stop();
 
     logger.debug(`Created bundle with length = ${bundle.length}`);
 
