@@ -73,14 +73,18 @@ class EVM extends KYVE {
           bundle.length < bundleItemSizeLimit
         ) {
           bundle.push(block);
+          console.log(h);
           h += 1;
         } else {
+          console.log("break with limit");
           break;
         }
       } catch {
         if (bundle.length) {
+          console.log("break with length");
           break;
         } else {
+          console.log("sleep 10s");
           await sleep(10 * 1000);
         }
       }
