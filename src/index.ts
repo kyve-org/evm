@@ -52,7 +52,7 @@ class EVM extends KYVE {
   public async createBundle(
     bundleInstructions: BundleInstructions
   ): Promise<Buffer[]> {
-    const bundleDataSizeLimit = 50 * 1000 * 1000; // 50 MB
+    const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
     const bundleItemSizeLimit = 10000;
     const bundle: Buffer[] = [];
 
