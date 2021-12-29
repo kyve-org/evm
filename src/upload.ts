@@ -1,7 +1,7 @@
 import { UploadFunctionSubscriber } from "@kyve/core/dist/src/faces";
 import { ethers } from "ethers";
 import { Logger } from "tslog";
-import { ConfigType } from "./faces";
+import { ConfigType, UploadData } from "./faces";
 
 const uploadFunction = (
   uploader: UploadFunctionSubscriber,
@@ -31,26 +31,20 @@ const uploadFunction = (
 
     // Subscribe to new blocks.
     client.on("block", async (height: number) => {
-      const block = await client.getBlockWithTransactions(height);
-
-      if (block.transactions.length) {
-        block.transactions.forEach(
-          // @ts-ignore
-          (transaction) => delete transaction.confirmations
-        );
-      }
+      const block: UploadData  = await client.getBlockWithTransactions(height);
 
       const tags = [
         { name: "Block", value: block.hash },
         { name: "Height", value: block.number.toString() },
       ];
       if (block.transactions.length) {
-        block.transactions.forEach((transaction) =>
+        block.transactions.forEach((transaction) => {
+          delete transaction.confirmations;
           tags.push({
             name: "Transaction",
             value: transaction.hash,
           })
-        );
+        });
       }
 
       uploader.upload({ data: JSON.stringify(block), tags });
