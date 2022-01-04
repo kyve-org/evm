@@ -1,4 +1,10 @@
-import KYVE, { BundleInstructions, logger, Progress } from "@kyve/core";
+import KYVE, {
+  Bundle,
+  BundleInstructions,
+  BundleProposal,
+  logger,
+  Progress,
+} from "@kyve/core";
 import path from "path";
 import { loadSync, Type } from "protobufjs";
 import { SafeProvider, sleep } from "./provider";
@@ -42,19 +48,19 @@ class EVM extends KYVE {
     const batch = await Promise.all(promises);
 
     return batch.map((b) => ({
-      key: b.number.toString(),
-      value: this.type
-        .encode(this.type.create(JSON.parse(JSON.stringify(b))))
-        .finish(),
+      key: b.number,
+      value: b,
     }));
   }
 
   public async createBundle(
     bundleInstructions: BundleInstructions
-  ): Promise<Buffer[]> {
+  ): Promise<Bundle> {
     const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
     const bundleItemSizeLimit = 10000;
-    const bundle: Buffer[] = [];
+    const bundle: any[] = [];
+
+    const progress = new Progress("blocks");
 
     logger.debug(
       `Creating bundle from height = ${bundleInstructions.fromHeight} ...`
@@ -63,34 +69,63 @@ class EVM extends KYVE {
     let currentDataSize = 0;
     let h = bundleInstructions.fromHeight;
 
+    progress.start(bundleItemSizeLimit, 0);
+
     while (true) {
       try {
         const block = await this.db.get(h);
-        currentDataSize += block.byteLength + 32;
+        currentDataSize += Buffer.from(JSON.stringify(block)).byteLength;
 
         if (
           currentDataSize < bundleDataSizeLimit &&
           bundle.length < bundleItemSizeLimit
         ) {
           bundle.push(block);
-          console.log(h);
           h += 1;
+          progress.update(h - bundleInstructions.fromHeight);
         } else {
-          console.log("break with limit");
           break;
         }
       } catch {
         if (bundle.length) {
-          console.log("break with length");
           break;
         } else {
-          console.log("sleep 10s");
           await sleep(10 * 1000);
         }
       }
     }
 
+    progress.stop();
+
     logger.debug(`Created bundle with length = ${bundle.length}`);
+
+    return {
+      fromHeight: bundleInstructions.fromHeight,
+      toHeight: h,
+      bundle,
+    };
+  }
+
+  public async loadBundle(bundleProposal: BundleProposal): Promise<any[]> {
+    const bundle: any[] = [];
+    const progress = new Progress("blocks");
+    let h: number = bundleProposal.fromHeight;
+
+    progress.start(bundleProposal.toHeight - bundleProposal.fromHeight, 0);
+
+    while (h < bundleProposal.toHeight) {
+      try {
+        const block = await this.db.get(h);
+
+        bundle.push(block);
+        h += 1;
+        progress.update(h - bundleProposal.fromHeight);
+      } catch {
+        await sleep(10 * 1000);
+      }
+    }
+
+    progress.stop();
 
     return bundle;
   }

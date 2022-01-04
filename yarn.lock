@@ -363,10 +363,11 @@
 
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.1.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/e6eb9c62bedceff78ffee2a1f389a9388b486ca3"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/3446920675fd614310d17f305e607e3a2d44d3d0"
   dependencies:
     "@types/cli-progress" "^3.9.2"
     "@types/du" "^1.0.1"
+    "@types/jsonfile" "^6.0.1"
     arweave "^1.10.17"
     base64url "^3.0.1"
     bignumber.js "^9.0.1"
@@ -375,6 +376,7 @@
     commander "^8.3.0"
     du "^1.0.0"
     ethers "^5.5.1"
+    jsonfile "^6.1.0"
     object-hash "^2.2.0"
     prando "^6.0.1"
     prom-client "^14.0.1"
@@ -467,6 +469,13 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/du/-/du-1.0.1.tgz#ed8bf4a0dab2ec0354fd4ccdd168b3c7d35cd326"
   integrity sha512-vwNP+pzkI1ipznek2fCA4xj1kQyL9EJcfdBezD9eToe9eP2IgT3WLEBrVqiXal34LOyiAs8xCQKwugEYOKcMkw==
+
+"@types/jsonfile@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@types/jsonfile/-/jsonfile-6.0.1.tgz#639eff0748d60dfbc9d5f743ca7178bd93f53c71"
+  integrity sha512-SSCc8i9yl6vjgXSyZb0uEodk3UjXuWd55t1D+Ie1zuTx7ml+2AEj0Xyomi3NBz1gCBsZVyWWnXOLXowS1ufhEw==
+  dependencies:
+    "@types/node" "*"
 
 "@types/long@^4.0.1":
   version "4.0.1"
@@ -1140,7 +1149,7 @@ js-sha3@0.8.0:
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
   integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
 
-jsonfile@^6.0.1:
+jsonfile@^6.0.1, jsonfile@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
   integrity sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==
