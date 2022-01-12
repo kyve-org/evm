@@ -1,14 +1,10 @@
 syntax = "proto3";
 
-// import "google/protobuf/any.proto";
-
 import "kyve/protobuf/big_number.proto";
 
 message Transaction {
-  // option (kyve.protobuf.primary_key_field) = "hash";
   string hash = 1;
   uint32 type = 2;
-  // repeated google.protobuf.Any accessList = 3;
   string blockHash = 4;
   uint32 blockNumber = 5;
   uint32 transactionIndex = 6;
@@ -24,12 +20,10 @@ message Transaction {
   string r = 16;
   string s = 17;
   uint32 v = 18;
-  // google.protobuf.Any creates = 19;
   uint32 chainId = 20;
 }
 
 message Block {
-  // option (kyve.protobuf.primary_key_field) = "hash";
   string hash = 1;
   string parentHash = 2;
   uint32 number = 3;
@@ -42,5 +36,4 @@ message Block {
   string extraData = 10;
   repeated Transaction transactions = 11;
   kyve.protobuf.BigNumber baseFeePerGas = 12;
-  // kyve.BigNumber _difficulty = 13;
 }
