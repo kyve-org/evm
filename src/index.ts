@@ -2,6 +2,7 @@ import KYVE, {
   Bundle,
   BundleInstructions,
   BundleProposal,
+  formatBundle,
   logger,
   Progress,
 } from "@kyve/core";
@@ -74,13 +75,14 @@ class EVM extends KYVE {
     while (true) {
       try {
         const block = await this.db.get(h);
-        currentDataSize += Buffer.from(JSON.stringify(block)).byteLength;
+        const encodedBlock = this.type.encode(block).finish();
+        currentDataSize += encodedBlock.byteLength + 32;
 
         if (
           currentDataSize < bundleDataSizeLimit &&
           bundle.length < bundleItemSizeLimit
         ) {
-          bundle.push(block);
+          bundle.push(encodedBlock);
           h += 1;
           progress.update(h - bundleInstructions.fromHeight);
         } else {
@@ -102,11 +104,11 @@ class EVM extends KYVE {
     return {
       fromHeight: bundleInstructions.fromHeight,
       toHeight: h,
-      bundle,
+      bundle: formatBundle(bundle),
     };
   }
 
-  public async loadBundle(bundleProposal: BundleProposal): Promise<any[]> {
+  public async loadBundle(bundleProposal: BundleProposal): Promise<Buffer> {
     const bundle: any[] = [];
     const progress = new Progress("blocks");
     let h: number = bundleProposal.fromHeight;
@@ -116,8 +118,9 @@ class EVM extends KYVE {
     while (h < bundleProposal.toHeight) {
       try {
         const block = await this.db.get(h);
+        const encodedBlock = this.type.encode(block).finish();
 
-        bundle.push(block);
+        bundle.push(encodedBlock);
         h += 1;
         progress.update(h - bundleProposal.fromHeight);
       } catch {
@@ -127,7 +130,7 @@ class EVM extends KYVE {
 
     progress.stop();
 
-    return bundle;
+    return formatBundle(bundle);
   }
 }
 
