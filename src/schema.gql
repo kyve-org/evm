@@ -20,7 +20,7 @@ type Transaction {
   data: String
   r: String
   s: String
-  v: String
+  v: Int
   chainId: Int
 }
 
