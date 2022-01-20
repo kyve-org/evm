@@ -362,7 +362,7 @@
 
 "@kyve/core@KYVENetwork/core#kyve-chain":
   version "0.2.0"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/14e77280f22165d313f2b6349fde7fb8bc242660"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/e42f9a73836d813fbafa558d2e026daf23dd05d7"
   dependencies:
     "@types/cli-progress" "^3.9.2"
     "@types/du" "^1.0.1"
