@@ -1,6 +1,6 @@
 {
   "name": "@kyve/evm",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "@kyve/core": "KYVENetwork/core#kyve-chain",
-    "ethers": "^5.5.1"
+    "ethers": "^5.5.3"
   },
   "devDependencies": {
-    "@types/node": "^16.10.3",
-    "pkg": "^5.3.3",
-    "prettier": "^2.4.1",
+    "@types/node": "^17.0.10",
+    "pkg": "^5.5.2",
+    "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "tslog": "^3.2.2",
-    "typescript": "^4.4.3",
+    "tslog": "^3.3.1",
+    "typescript": "^4.5.4",
     "webhook-discord": "^3.7.8"
   }
 }
