@@ -1,11 +1,4 @@
-import KYVE, {
-  Bundle,
-  BundleInstructions,
-  BundleProposal,
-  formatBundle,
-  logger,
-  Progress,
-} from "@kyve/core";
+import KYVE, { Bundle, formatBundle, Progress } from "@kyve/core";
 import { SafeProvider, sleep } from "./provider";
 import { version } from "../package.json";
 
@@ -43,9 +36,7 @@ class EVM extends KYVE {
     }));
   }
 
-  public async createBundle(
-    bundleInstructions: BundleInstructions
-  ): Promise<Bundle> {
+  public async createBundle(): Promise<Bundle> {
     const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
     const bundleItemSizeLimit = 10000;
     const bundle: any[] = [];
@@ -53,7 +44,7 @@ class EVM extends KYVE {
     const progress = new Progress("blocks");
 
     let currentDataSize = 0;
-    let h = bundleInstructions.fromHeight;
+    let h = this.pool.bundleProposal.toHeight;
 
     progress.start(bundleItemSizeLimit, 0);
 
@@ -69,7 +60,7 @@ class EVM extends KYVE {
         ) {
           bundle.push(encodedBlock);
           h += 1;
-          progress.update(h - bundleInstructions.fromHeight);
+          progress.update(h - this.pool.bundleProposal.toHeight);
         } else {
           break;
         }
@@ -85,27 +76,30 @@ class EVM extends KYVE {
     progress.stop();
 
     return {
-      fromHeight: bundleInstructions.fromHeight,
+      fromHeight: this.pool.bundleProposal.toHeight,
       toHeight: h,
       bundle: formatBundle(bundle),
     };
   }
 
-  public async loadBundle(bundleProposal: BundleProposal): Promise<Buffer> {
+  public async loadBundle(): Promise<Buffer> {
     const bundle: any[] = [];
     const progress = new Progress("blocks");
-    let h: number = bundleProposal.fromHeight;
+    let h: number = +this.pool.bundleProposal.fromHeight;
 
-    progress.start(bundleProposal.toHeight - bundleProposal.fromHeight, 0);
+    progress.start(
+      +this.pool.bundleProposal.toHeight - this.pool.bundleProposal.fromHeight,
+      0
+    );
 
-    while (h < bundleProposal.toHeight) {
+    while (h < +this.pool.bundleProposal.toHeight) {
       try {
         const block = await this.db.get(h);
         const encodedBlock = Buffer.from(JSON.stringify(block));
 
         bundle.push(encodedBlock);
         h += 1;
-        progress.update(h - bundleProposal.fromHeight);
+        progress.update(h - this.pool.bundleProposal.fromHeight);
       } catch {
         await sleep(10 * 1000);
       }
