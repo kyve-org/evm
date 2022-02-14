@@ -44,7 +44,7 @@ class EVM extends KYVE {
     const progress = new Progress("blocks");
 
     let currentDataSize = 0;
-    let h = this.pool.bundleProposal.toHeight;
+    let h = +this.pool.bundleProposal.toHeight;
 
     progress.start(bundleItemSizeLimit, 0);
 

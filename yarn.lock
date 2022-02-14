@@ -489,7 +489,7 @@
 
 "@kyve/core@KYVENetwork/core#starport":
   version "0.2.0"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/3a73c81cdbd36cae2ea1b61b1d833feed64e58b1"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/67062217265db7ec64075019f393c0d91caa3474"
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
