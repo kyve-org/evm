@@ -14,7 +14,7 @@ class EVM extends KYVE {
     const batchSize = 100;
     const rateLimit = 10;
 
-    const provider = new SafeProvider(this.pool.metadata.rpc);
+    const provider = new SafeProvider(this.pool.config.rpc);
     const currentHeight = await provider.getBlockNumber();
     const promises: any[] = [];
 
