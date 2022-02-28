@@ -360,10 +360,10 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
-"@kyve/core@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.2.0.tgz#a16ab8fc1d87eae19a3764db545d40e1504cafce"
-  integrity sha512-XaeJeDB7E82neyg81my3icj36bl6wPi1OCmfN3lwIMAYp3YeUpthIePoQZQYeSVw+8Y4j3L1npkAf3pGSyhJUw==
+"@kyve/core@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-0.2.1.tgz#c2b115462713317b0a7c342236c25ea62561f57f"
+  integrity sha512-rk6C581gSb38BBVYuv514XUFm0B8iXQ7YqSj+Ah9OXQlvt2R8xL+YJ4Tw+ITBKGcEj7JHyb6aWOwvJ1oLvnfgA==
   dependencies:
     "@types/cli-progress" "^3.9.2"
     "@types/du" "^1.0.1"
