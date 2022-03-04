@@ -1,5 +1,5 @@
-import KYVE, { Bundle, formatBundle } from "@kyve/core";
-import { SafeProvider, sleep } from "./provider";
+import KYVE, { sleep } from "@kyve/core";
+import { providers } from "ethers";
 import { version } from "../package.json";
 
 process.env.KYVE_RUNTIME = "@kyve/evm";
@@ -10,88 +10,40 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
-  public async requestWorkerBatch(workerHeight: number): Promise<any[]> {
-    const batchSize = 100;
-    const rateLimit = 10;
+  public async getDataItem(height: number): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let provider;
+      let dataItem;
 
-    const provider = new SafeProvider(this.pool.config.rpc);
-    const currentHeight = await provider.getBlockNumber();
-    const promises: any[] = [];
-
-    const toHeight =
-      workerHeight + batchSize <= currentHeight
-        ? workerHeight + batchSize
-        : currentHeight;
-
-    for (let height = workerHeight; height < toHeight; height++) {
-      promises.push(provider.safeGetBlockWithTransactions(height));
-      await sleep(rateLimit);
-    }
-
-    const batch = await Promise.all(promises);
-
-    return batch.map((b) => ({
-      key: b.number,
-      value: b,
-    }));
-  }
-
-  public async createBundle(): Promise<Bundle> {
-    const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
-    const bundleItemSizeLimit = 10000;
-    const bundle: any[] = [];
-
-    let currentDataSize = 0;
-    let h = +this.pool.bundleProposal.toHeight;
-
-    while (true) {
       try {
-        const block = await this.db.get(h);
-        const encodedBlock = Buffer.from(JSON.stringify(block));
-        currentDataSize += encodedBlock.byteLength + 32;
+        provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
+      } catch (err) {
+        reject(err);
+      }
 
-        if (
-          currentDataSize < bundleDataSizeLimit &&
-          bundle.length < bundleItemSizeLimit
-        ) {
-          bundle.push(encodedBlock);
-          h += 1;
-        } else {
+      while (true) {
+        try {
+          const block = await provider?.getBlockWithTransactions(height)!;
+
+          if (block.transactions.length) {
+            block.transactions.forEach(
+              // @ts-ignore
+              (transaction) => delete transaction.confirmations
+            );
+          }
+
+          dataItem = block;
+
           break;
-        }
-      } catch {
-        if (bundle.length) {
-          break;
-        } else {
-          await sleep(10 * 1000);
+        } catch {
+          await sleep(1000);
         }
       }
-    }
 
-    return {
-      fromHeight: this.pool.bundleProposal.toHeight,
-      toHeight: h,
-      bundle: formatBundle(bundle),
-    };
-  }
+      await this.db.put(height, dataItem);
 
-  public async loadBundle(): Promise<Buffer> {
-    const bundle: any[] = [];
-    let h: number = +this.pool.bundleProposal.fromHeight;
-
-    while (h < +this.pool.bundleProposal.toHeight) {
-      try {
-        const block = await this.db.get(h);
-        const encodedBlock = Buffer.from(JSON.stringify(block));
-
-        bundle.push(encodedBlock);
-        h += 1;
-      } catch {
-        await sleep(10 * 1000);
-      }
-    }
-
-    return formatBundle(bundle);
+      resolve();
+    });
   }
 }
 
