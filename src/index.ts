@@ -10,8 +10,8 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
-  public async getDataItem(height: number): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
+  public async getDataItem(height: number): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
       let provider;
       let dataItem;
 
@@ -40,9 +40,7 @@ class EVM extends KYVE {
         }
       }
 
-      await this.db.put(height, dataItem);
-
-      resolve();
+      resolve(dataItem);
     });
   }
 }
