@@ -15,8 +15,6 @@ class EVM extends KYVE {
     let provider;
     let block;
 
-    console.log("called with height", key);
-
     // setup provider for evm chain
     try {
       provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
@@ -24,7 +22,6 @@ class EVM extends KYVE {
       this.logger.warn(
         `⚠️  EXTERNAL ERROR: Failed to connect with rpc: ${this.pool.config.rpc}. Retrying ...`
       );
-      this.logger.debug(err);
       // forward error to core
       throw err;
     }
@@ -44,7 +41,6 @@ class EVM extends KYVE {
       this.logger.warn(
         `⚠️  EXTERNAL ERROR: Failed to fetch data item from source at height ${key}. Retrying ...`
       );
-      this.logger.debug(err);
       // forward error to core
       throw err;
     }
