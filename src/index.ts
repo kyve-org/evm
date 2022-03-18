@@ -10,38 +10,46 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
-  public async getDataItem(height: number): Promise<any> {
-    return new Promise<any>(async (resolve, reject) => {
-      let provider;
-      let dataItem;
+  public async getDataItem(key: number): Promise<{ key: number; value: any }> {
+    let provider;
+    let block;
 
-      try {
-        provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
-      } catch (err) {
-        reject(err);
+    // setup provider for evm chain
+    try {
+      provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
+    } catch (err) {
+      this.logger.warn(
+        `⚠️  EXTERNAL ERROR: Failed to connect with rpc: ${this.pool.config.rpc}. Retrying ...`
+      );
+      this.logger.debug(err);
+      // forward error to core
+      throw err;
+    }
+
+    // fetch block with transactions at requested height
+    try {
+      block = await provider?.getBlockWithTransactions(key)!;
+
+      // delete transaction confirmations from block since they are not deterministic
+      if (block.transactions.length) {
+        block.transactions.forEach(
+          (transaction: Partial<providers.TransactionResponse>) =>
+            delete transaction.confirmations
+        );
       }
+    } catch (err) {
+      this.logger.warn(
+        `⚠️  EXTERNAL ERROR: Failed to fetch data item from source at height ${key}. Retrying ...`
+      );
+      this.logger.debug(err);
+      // forward error to core
+      throw err;
+    }
 
-      while (true) {
-        try {
-          const block = await provider?.getBlockWithTransactions(height)!;
-
-          if (block.transactions.length) {
-            block.transactions.forEach(
-              // @ts-ignore
-              (transaction) => delete transaction.confirmations
-            );
-          }
-
-          dataItem = block;
-
-          break;
-        } catch {
-          await sleep(1000);
-        }
-      }
-
-      resolve(dataItem);
-    });
+    return {
+      key,
+      value: block,
+    };
   }
 }
 
