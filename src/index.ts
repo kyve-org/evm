@@ -1,4 +1,4 @@
-import KYVE, { sleep } from "@kyve/core";
+import KYVE from "@kyve/core";
 import { providers } from "ethers";
 import { version } from "../package.json";
 
@@ -10,6 +10,7 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
+  // pull data item from source
   public async getDataItem(key: number): Promise<{ key: number; value: any }> {
     let provider;
     let block;
@@ -50,6 +51,22 @@ class EVM extends KYVE {
       key,
       value: block,
     };
+  }
+
+  // validate the data item uploaded by a node
+  public async validate(
+    uploadBundle: Buffer,
+    uploadBytes: number,
+    downloadBundle: Buffer,
+    downloadBytes: number
+  ): Promise<boolean> {
+    // default validate consists of a simple hash comparison
+    return super.validate(
+      uploadBundle,
+      uploadBytes,
+      downloadBundle,
+      downloadBytes
+    );
   }
 }
 
