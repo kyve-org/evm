@@ -15,6 +15,8 @@ class EVM extends KYVE {
     let provider;
     let block;
 
+    console.log("called with height", key);
+
     // setup provider for evm chain
     try {
       provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
