@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "build:binaries": "yarn build && pkg package.json",
+    "build:binaries": "yarn build && rimraf out && pkg package.json",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
