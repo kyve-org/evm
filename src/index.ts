@@ -31,12 +31,10 @@ class EVM extends KYVE {
       block = await provider?.getBlockWithTransactions(key)!;
 
       // delete transaction confirmations from block since they are not deterministic
-      if (block.transactions.length) {
-        block.transactions.forEach(
-          (transaction: Partial<providers.TransactionResponse>) =>
-            delete transaction.confirmations
-        );
-      }
+      block.transactions.forEach(
+        (transaction: Partial<providers.TransactionResponse>) =>
+          delete transaction.confirmations
+      );
     } catch (err) {
       this.logger.warn(
         `⚠️  EXTERNAL ERROR: Failed to fetch data item from source at height ${key}. Retrying ...`
