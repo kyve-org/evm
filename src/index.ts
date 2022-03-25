@@ -51,18 +51,13 @@ class EVM extends KYVE {
 
   // validate the data item uploaded by a node
   public async validate(
-    uploadBundle: Buffer,
-    uploadBytes: number,
-    downloadBundle: Buffer,
-    downloadBytes: number
+    localBundle: any[],
+    localBytes: number,
+    uploadBundle: any[],
+    uploadBytes: number
   ): Promise<boolean> {
     // default validate consists of a simple hash comparison
-    return super.validate(
-      uploadBundle,
-      uploadBytes,
-      downloadBundle,
-      downloadBytes
-    );
+    return super.validate(localBundle, localBytes, uploadBundle, uploadBytes);
   }
 }
 
