@@ -11,7 +11,7 @@
   "bin": "./dist/src/index.js",
   "pkg": {
     "scripts": "./dist/src/index.js",
-    "assets": "./node_modules/@kyve/sdk-test/dist/proto/*",
+    "assets": "./node_modules/@kyve/sdk/dist/proto/*",
     "targets": [
       "latest-linux-x64",
       "latest-macos-x64",
