@@ -1,15 +1,26 @@
 {
   "name": "@kyve/evm",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "build:binaries": "yarn build && pkg ./dist/src/index.js --targets latest-linux-x64,latest-macos-x64,latest-win-x64 --out-path out",
+    "build:binaries": "yarn build && rimraf out && pkg package.json",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
+  "bin": "./dist/src/index.js",
+  "pkg": {
+    "scripts": "./dist/src/index.js",
+    "assets": "./node_modules/@kyve/sdk-test/dist/proto/*",
+    "targets": [
+      "latest-linux-x64",
+      "latest-macos-x64",
+      "latest-win-x64"
+    ],
+    "outputPath": "out"
+  },
   "dependencies": {
-    "@kyve/core": "^0.2.2",
+    "@kyve/core": "^1.0.1",
     "ethers": "^5.5.3"
   },
   "devDependencies": {

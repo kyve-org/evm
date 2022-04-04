@@ -1,12 +1,5 @@
-import KYVE, {
-  Bundle,
-  BundleInstructions,
-  BundleProposal,
-  formatBundle,
-  logger,
-  Progress,
-} from "@kyve/core";
-import { SafeProvider, sleep } from "./provider";
+import KYVE from "@kyve/core";
+import { providers } from "ethers";
 import { version } from "../package.json";
 
 process.env.KYVE_RUNTIME = "@kyve/evm";
@@ -17,103 +10,54 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class EVM extends KYVE {
-  public async requestWorkerBatch(workerHeight: number): Promise<any[]> {
-    const batchSize = 100;
-    const rateLimit = 10;
+  // pull data item from source
+  public async getDataItem(key: number): Promise<{ key: number; value: any }> {
+    let provider;
+    let block;
 
-    const provider = new SafeProvider(this.poolState.config.rpc);
-    const currentHeight = await provider.getBlockNumber();
-    const promises: any[] = [];
-
-    const toHeight =
-      workerHeight + batchSize <= currentHeight
-        ? workerHeight + batchSize
-        : currentHeight;
-
-    for (let height = workerHeight; height < toHeight; height++) {
-      promises.push(provider.safeGetBlockWithTransactions(height));
-      await sleep(rateLimit);
+    // setup provider for evm chain
+    try {
+      provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
+    } catch (err) {
+      this.logger.warn(
+        `⚠️  EXTERNAL ERROR: Failed to connect with rpc: ${this.pool.config.rpc}. Retrying ...`
+      );
+      // forward error to core
+      throw err;
     }
 
-    const batch = await Promise.all(promises);
+    // fetch block with transactions at requested height
+    try {
+      block = await provider?.getBlockWithTransactions(key)!;
 
-    return batch.map((b) => ({
-      key: b.number,
-      value: b,
-    }));
-  }
-
-  public async createBundle(
-    bundleInstructions: BundleInstructions
-  ): Promise<Bundle> {
-    const bundleDataSizeLimit = 20 * 1000 * 1000; // 20 MB
-    const bundleItemSizeLimit = 10000;
-    const bundle: any[] = [];
-
-    const progress = new Progress("blocks");
-
-    let currentDataSize = 0;
-    let h = bundleInstructions.fromHeight;
-
-    progress.start(bundleItemSizeLimit, 0);
-
-    while (true) {
-      try {
-        const block = await this.db.get(h);
-        const encodedBlock = Buffer.from(JSON.stringify(block));
-        currentDataSize += encodedBlock.byteLength + 32;
-
-        if (
-          currentDataSize < bundleDataSizeLimit &&
-          bundle.length < bundleItemSizeLimit
-        ) {
-          bundle.push(encodedBlock);
-          h += 1;
-          progress.update(h - bundleInstructions.fromHeight);
-        } else {
-          break;
-        }
-      } catch {
-        if (bundle.length) {
-          break;
-        } else {
-          await sleep(10 * 1000);
-        }
-      }
+      // delete transaction confirmations from block since they are not deterministic
+      block.transactions.forEach(
+        (transaction: Partial<providers.TransactionResponse>) =>
+          delete transaction.confirmations
+      );
+    } catch (err) {
+      this.logger.warn(
+        `⚠️  EXTERNAL ERROR: Failed to fetch data item from source at height ${key}. Retrying ...`
+      );
+      // forward error to core
+      throw err;
     }
-
-    progress.stop();
 
     return {
-      fromHeight: bundleInstructions.fromHeight,
-      toHeight: h,
-      bundle: formatBundle(bundle),
+      key,
+      value: block,
     };
   }
 
-  public async loadBundle(bundleProposal: BundleProposal): Promise<Buffer> {
-    const bundle: any[] = [];
-    const progress = new Progress("blocks");
-    let h: number = bundleProposal.fromHeight;
-
-    progress.start(bundleProposal.toHeight - bundleProposal.fromHeight, 0);
-
-    while (h < bundleProposal.toHeight) {
-      try {
-        const block = await this.db.get(h);
-        const encodedBlock = Buffer.from(JSON.stringify(block));
-
-        bundle.push(encodedBlock);
-        h += 1;
-        progress.update(h - bundleProposal.fromHeight);
-      } catch {
-        await sleep(10 * 1000);
-      }
-    }
-
-    progress.stop();
-
-    return formatBundle(bundle);
+  // validate the data item uploaded by a node
+  public async validate(
+    localBundle: any[],
+    localBytes: number,
+    uploadBundle: any[],
+    uploadBytes: number
+  ): Promise<boolean> {
+    // default validate consists of a simple hash comparison
+    return super.validate(localBundle, localBytes, uploadBundle, uploadBytes);
   }
 }
 
