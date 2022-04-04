@@ -6,140 +6,168 @@
   <p align="center">✅ The official KYVE EVM integration.</p>
 </p>
 
-## How to run a node
+## How to run a protocol evm node
 
 ### Requirements
 
-- Ethereum Wallet
-- You need $DEV and $KYVE (You can get some for free [here](https://app.kyve.network/faucet))
-- Any device with a good internet connection
+Wallets
 
-### Docker
+- A [Keplr](https://keplr.app) wallet with $KYVE. (You can claim some [here](https://app.kyve.network/faucet))
+- An [Arweave](https://arweave.org/) keyfile with some AR. (You can claim some [here](https://faucet.arweave.net/))
 
-You can run the EVM integration directly from Docker.
+Minimum hardware requirements
 
-To pull the latest Docker image, run:
+- 1vCPU
+- 4GB RAM
+- 1GB DISK
 
-```
-docker pull kyve/evm:latest
-```
+### Get some $KYVE
 
-And to start your node, run the following (don't forget to pass in [options](#options)):
+Before continuing, make sure that you have the [Keplr](https://keplr.app) wallet installed in your browser. Head over to the [KYVE app](https://app.kyve.network) and make sure to connect your wallet (this automatically adds and switches to the KYVE network).
 
-```
-docker run --rm --name kyve-evm-node kyve/evm:latest --pool {POOL_ADDRESS} --private-key {PRIVATE_KEY} --stake 100
-```
+Go to the faucet tab and claim some tokens via one of three faucets. The wheel is the easiest option.
 
-### Prebuilt Binaries
+### Choose a pool
 
-We also provide prebuilt binaries for you to run.
+Before you can run a protocol node you have to choose a pool you want to join. You can find an overview of all pools
+in the KYVE app [here](https://app.kyve.network/). Once you have chosen a pool you have to remember the pool id and the
+pool runtime for later. You can find this information right below the pool name once you have clicked on a pool in the overview. In this example we have chosen the first pool with the pool id `0` and the runtime `@kyve/evm`.
 
-We currently support Linux, MacOS, and Windows binaries - which you can download from [here](https://github.com/KYVENetwork/evm/releases).
+### Verify that you can claim a validator slot
 
-To run a binary, all you need to do is specify your [options](#options).
+Due to a limited number of validator slots in each pool only the nodes with the highest stake can claim
+a validator slot. You can only claim a validator slot if you have **more than the minimum staking amount**.
 
-### Options
+To check the minimum staking amount you can click on the tab `Validators` once you have selected a pool. There you should see something like this:
 
-#### `-p, --pool <string>`
+![minimum stake](/minimum_stake.png)
 
-The address of the pool you want to run on.
+In this case all validator slots are occupied, but since the minimum staking amount is 300 $KYVE you just need to have more than 300 to claim a slot. If the minimum staking amount is zero you just have to have more than zero $KYVE.
 
-#### `-s, --stake <string>`
+::: warning
+**IMPORTANT**: Do not stake yet! Just verify that you can afford the minimum staking amount, you will stake later in this tutorial.
+:::
 
-The amount of tokens you want to stake.
+::: warning
+**IMPORTANT**: If you don't have more $KYVE than the minimum staking amount you can not continue!
+:::
 
-#### `-pk, --private-key <string>`
+### Manually build the binaries
 
-Your Ethereum private key that holds $KYVE.
-
-#### `-k, --keyfile <string>` _optional_
-
-The path to your Arweave keyfile.
-
-#### `-n, --name <string>` _optional, default is a random name_
-
-The identifier name of the node.
-
-#### `-e, --endpoint <string>` _optional_
-
-A custom Moonbase Alpha endpoint.
-
-#### `-g, --gas-multiplier <string>` _optional_
-
-The amount that you want to multiply the default gas price by.
-
-#### `-st, --send-statistics <boolean>` _optional, default is true_
-
-Send statistics.
-
-### Run on linux
+Since we want to run a protocol node on a `@kyve/evm` runtime pool we have to clone the correct repository. In our
+case clone the [EVM repository](https://github.com/KYVENetwork/evm) and make sure your are on branch `main`.
 
 ```
-./kyve-evm-linux --pool {POOL_ADDRESS} --private-key {PRIVATE_KEY} --stake 100
+git clone https://github.com/KYVENetwork/evm.git
+cd evm
 ```
 
-### Run on macos
+Now run the following commands to install dependencies and build the binaries
 
 ```
-./kyve-evm-macos --pool {POOL_ADDRESS} --private-key {PRIVATE_KEY} --stake 100
+yarn install
+yarn build:binaries
 ```
 
-### Run on windows
+> Note: In the future we will add Docker support and release the prebuilt binaries to GitHub
+
+### Verify that your binary has been built correctly
+
+The step above should have created a directory called `out` with three binaries. Now execute the correct binary that matches your operating system using the following command (example is on a MacOS machine)
 
 ```
-.\kyve-evm-win.exe --pool {POOL_ADDRESS} --private-key {PRIVATE_KEY} --stake 100
+./out/evm-macos --help
 ```
 
-## Verify a node is running correctly
-
-### Uploader
-
-When you run as an uploader you should see something like:
+If everything is set up correctly you should see the following
 
 ```
-2021-10-19 11:30:11.424  INFO 🚀 Starting node ...
-    Name          = bored-barriss-offee
-    Address       = 0x7948b7D103f4B70645a1e6d32F7BeEC776D68008
-    Pool          = 0x841b639Fc930BB2eBc820B36E9A6810758D31A63
-    Desired Stake = 100 $KYVE
-    Version       = v0.0.3
-2021-10-19 11:30:11.429  DEBUG [Metadata] Attempting to fetch the metadata.
-2021-10-19 11:30:12.224  DEBUG [Metadata] Successfully fetched the metadata.
-2021-10-19 11:30:12.225  DEBUG [Settings] Attempting to fetch the settings.
-2021-10-19 11:30:12.943  DEBUG [Settings] Successfully fetched the settings.
-2021-10-19 11:30:12.948  DEBUG [Config] Attempting to fetch the config.
-2021-10-19 11:30:13.702  DEBUG [Config] Successfully fetched the config.
-2021-10-19 11:30:13.703  INFO 💻 Running node on runtime @kyve/evm.
-2021-10-19 11:30:15.130  DEBUG [Stake] Attempting to stake 100 $KYVE.
-2021-10-19 11:30:18.758  DEBUG [Stake] Approving 100 $KYVE to be spent. Transaction = 0x6f1b0dc91bcc245497e4c36573e3558ac12fbc958b082d3053ad76006306f8de
-2021-10-19 11:33:22.406  INFO [Stake] 👍 Successfully approved.
-2021-10-19 11:33:25.360  DEBUG [Stake] Staking 100 $KYVE. Transaction = 0x475239ca3023ed2420bd1ae28b5bd031424e836d4b45d065d839d036a5dc083b
-2021-10-19 11:40:50.727  INFO [Stake] 📈 Successfully staked.
-2021-10-19 11:40:51.495  INFO [EVM] ✅ Connection created. Endpoint = wss://api.avax.network/ext/bc/C/ws
+Usage: @kyve/evm [options]
+
+Options:
+  --name <string>           The identifier name of the node. [optional, default = auto generated]
+  -p, --poolId <number>     The id of the pool you want to run on.
+  -m, --mnemonic <string>   Your mnemonic of your account.
+  -k, --keyfile <string>    The path to your Arweave keyfile.
+  -n, --network <string>    The chain id of the network. [optional, default = beta] (default: "beta")
+  -sp, --space <number>     The size of disk space in bytes the node is allowed to use. [optional, default = 1000000000 (1 GB)] (default: "1000000000")
+  -b, --batchSize <number>  The batch size of fetching items from datasource. For synchronous fetching enter 1. [optional, default = 1] (default: "1")
+  --metrics                 Run Prometheus metrics server. [optional, default = false] (default: false)
+  -v, --verbose             Run node in verbose mode. [optional, default = false] (default: false)
+  --version                 output the version number
+  -h, --help                display help for command
 ```
 
-### Validator
+### Start your node
 
-When you run as a validator you should see something like:
+To run your node, copy your Arweave keyfile into your working directory and fetch the mnemonic from Keplr.
+
+Run the following command with the same binary as above
 
 ```
-2021-10-19 11:01:00.309  INFO 🚀 Starting node ...
-    Name          = thoughtful-tarfful
-    Address       = 0x785f8F0283C5fb0aaC4049A070B731D3316a9D52
-    Pool          = 0x841b639Fc930BB2eBc820B36E9A6810758D31A63
-    Desired Stake = 100 $KYVE
-    Version       = v0.0.3
-2021-10-19 11:01:00.314  DEBUG [Metadata] Attempting to fetch the metadata.
-2021-10-19 11:01:01.144  DEBUG [Metadata] Successfully fetched the metadata.
-2021-10-19 11:01:01.144  DEBUG [Settings] Attempting to fetch the settings.
-2021-10-19 11:01:01.885  DEBUG [Settings] Successfully fetched the settings.
-2021-10-19 11:01:01.889  DEBUG [Config] Attempting to fetch the config.
-2021-10-19 11:01:02.597  DEBUG [Config] Successfully fetched the config.
-2021-10-19 11:01:02.597  INFO 💻 Running node on runtime @kyve/evm.
-2021-10-19 11:01:14.020  DEBUG [Stake] Attempting to stake 100 $KYVE.
-2021-10-19 11:01:17.756  DEBUG [Stake] Approving 100 $KYVE to be spent. Transaction = 0x9ea0b66587c704cbaef918271b97254646c4cb668c9bff6e6cb448606249689d
-2021-10-19 11:13:55.444  INFO [Stake] 👍 Successfully approved.
-2021-10-19 11:13:58.666  DEBUG [Stake] Staking 100 $KYVE. Transaction = 0xd4d1229e761ac4f0540864ecef39df6aa0920c694548a1d9e2ac8ae14b362f57
-2021-10-19 11:27:43.624  INFO [Stake] 📈 Successfully staked.
-2021-10-19 11:27:43.629  INFO [Validator] ✅ Connection created. Endpoint = https://api.avax.network/ext/bc/C/rpc
+./out/evm-macos --poolId 0 --mnemonic "your mnemonic in here ..." --keyfile ./arweave.json --network korellia
+```
+
+If your node has started correctly, it should print some logs like this:
+
+```
+2022-04-01 08:32:27.597  INFO  🚀 Starting node ...
+
+        Node name     = light-pink-cricket
+        Address       = kyve1eka2hngntu5r2yeuyz5pd45a0fadarp3zue8gd
+        Pool Id       = 0
+        Cache height  = 5087
+        @kyve/core    = v0.2.2
+        @kyve/evm     = v0.2.0
+
+2022-04-01 08:32:27.598  DEBUG Attempting to fetch pool state.
+2022-04-01 08:32:27.724  INFO  💻 Running node on runtime @kyve/evm.
+2022-04-01 08:32:27.727  INFO  ⏱  Pool version requirements met
+2022-04-01 08:32:27.728  INFO  ✅ Fetched pool state
+2022-04-01 08:32:27.728  DEBUG Attempting to verify node.
+2022-04-01 08:32:27.728  WARN ⚠️  Node is not an active validator!
+2022-04-01 08:32:27.728  WARN ⚠️  Stake $KYVE here to join as a validator: https://app.korellia.kyve.network/#/pools/0/validators - Idling ...
+```
+
+### Stake node
+
+When you see your node idling everything is correct. Since the node has not claimed a validator slot yet your node
+can not participate. In order to do that head back to the [app](https://app.kyve.network) and click on the `Validator` tab.
+After that click on the button `Become a validator` and follow the instructions.
+
+![become validator](/become_validator.png)
+
+After you have successfully staked you should see your address in the Pool validators table.
+
+![verify stake](/verify_stake.png)
+
+When you look at your node logs you should then see that the node is starting to verify bundles.
+
+```
+2022-04-01 08:32:27.597  INFO  🚀 Starting node ...
+
+        Node name     = light-pink-cricket
+        Address       = kyve1eka2hngntu5r2yeuyz5pd45a0fadarp3zue8gd
+        Pool Id       = 0
+        Cache height  = 5087
+        @kyve/core    = v0.2.2
+        @kyve/evm     = v0.2.0
+
+2022-04-01 08:32:27.598  DEBUG Attempting to fetch pool state.
+2022-04-01 08:32:27.724  INFO  💻 Running node on runtime @kyve/evm.
+2022-04-01 08:32:27.727  INFO  ⏱  Pool version requirements met
+2022-04-01 08:32:27.728  INFO  ✅ Fetched pool state
+2022-04-01 08:32:27.728  DEBUG Attempting to verify node.
+2022-04-01 08:32:27.728  WARN ⚠️  Node is not an active validator!
+2022-04-01 08:32:27.728  WARN ⚠️  Stake $KYVE here to join as a validator: https://app.korellia.kyve.network/#/pools/0/validators - Idling ...
+
+2022-04-01 08:32:27.728  WARN ⚠️  Node is not an active validator!
+2022-04-01 08:32:27.728  WARN ⚠️  Stake $KYVE here to join as a validator: https://app.korellia.kyve.network/#/pools/0/validators - Idling ...
+
+2022-04-01 08:33:27.728  WARN ⚠️  Node is not an active validator!
+2022-04-01 08:33:27.728  WARN ⚠️  Stake $KYVE here to join as a validator: https://app.korellia.kyve.network/#/pools/0/validators - Idling ...
+
+2022-04-01 8:34:16.575  INFO  ⚡️ Starting new proposal
+2022-04-01 8:34:17.123  INFO  🧐 Selected as VALIDATOR
+2022-04-01 8:34:17.512  DEBUG Waiting for new proposal ...
 ```
