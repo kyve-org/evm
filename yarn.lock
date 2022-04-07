@@ -774,7 +774,7 @@
 
 "@kyve/core@KYVENetwork/core#dev":
   version "1.0.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/549490590a50e5c02aa81ac732de26d12e614e58"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/822e26128607778e7c0bd5881dfc364c90feb3c9"
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"

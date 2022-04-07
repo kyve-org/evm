@@ -20,7 +20,7 @@ class EVM extends KYVE {
       provider = new providers.StaticJsonRpcProvider(this.pool.config.rpc);
     } catch (err) {
       this.logger.warn(
-        `⚠️  EXTERNAL ERROR: Failed to connect with rpc: ${this.pool.config.rpc}. Retrying ...`
+        ` EXTERNAL ERROR: Failed to connect with rpc: ${this.pool.config.rpc}. Retrying ...`
       );
       // forward error to core
       throw err;
@@ -37,7 +37,7 @@ class EVM extends KYVE {
       );
     } catch (err) {
       this.logger.warn(
-        `⚠️  EXTERNAL ERROR: Failed to fetch data item from source at height ${key}. Retrying ...`
+        ` EXTERNAL ERROR: Failed to fetch data item from source at height ${key}. Retrying ...`
       );
       // forward error to core
       throw err;
