@@ -26,6 +26,25 @@ class EVM extends KYVE {
       throw err;
     }
 
+    // try to fetch current block height
+    try {
+      const height = await provider.getBlockNumber();
+
+      // throw error if requested block height is not available yet
+      if (height < key) {
+        this.logger.warn(
+          ` EXTERNAL ERROR: Requested block does not exist yet. Retrying ...`
+        );
+        throw new Error();
+      }
+    } catch (err) {
+      this.logger.warn(
+        ` EXTERNAL ERROR: Failed to fetch current block height. Retrying ...`
+      );
+      // forward error to core
+      throw err;
+    }
+
     // fetch block with transactions at requested height
     try {
       block = await provider?.getBlockWithTransactions(key)!;
@@ -47,17 +66,6 @@ class EVM extends KYVE {
       key,
       value: block,
     };
-  }
-
-  // validate the data item uploaded by a node
-  public async validate(
-    localBundle: any[],
-    localBytes: number,
-    uploadBundle: any[],
-    uploadBytes: number
-  ): Promise<boolean> {
-    // default validate consists of a simple hash comparison
-    return super.validate(localBundle, localBytes, uploadBundle, uploadBytes);
   }
 }
 
