@@ -20,7 +20,7 @@
     "outputPath": "out"
   },
   "dependencies": {
-    "@kyve/core": "KYVENetwork/core#dev",
+    "@kyve/core": "^1.0.3",
     "ethers": "^5.5.3"
   },
   "devDependencies": {

@@ -772,9 +772,10 @@
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
-"@kyve/core@KYVENetwork/core#dev":
-  version "1.0.2"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/cd3e43b9c436092513767468cb94697775f263bc"
+"@kyve/core@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.0.3.tgz#87740adf4a0423020bfc5426db357c27d500e3f8"
+  integrity sha512-Z+pScfAhkaFpDDBk6PPHAkJnYqsrzZ/RObA9wKVYrpweGGtBK2lZARAreshSfW0IVXmk/sv1reM4FeicJB78sQ==
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
