@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:current-alpine
 
 COPY package.json .
 RUN yarn install

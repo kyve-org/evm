@@ -1,4 +1,4 @@
-name: Deploy
+name: Release
 
 on:
   release:
@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
 
       - name: Install yarn.
         run: npm install -g yarn
@@ -23,18 +23,18 @@ jobs:
       - name: Build.
         run: yarn build:binaries
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: kyve-evm-linux
-          path: ./out/index-linux
-      - uses: actions/upload-artifact@v2
+          path: ./out/evm-linux
+      - uses: actions/upload-artifact@v3
         with:
           name: kyve-evm-macos
-          path: ./out/index-macos
-      - uses: actions/upload-artifact@v2
+          path: ./out/evm-macos
+      - uses: actions/upload-artifact@v3
         with:
-          name: kyve-evm-win.exe
-          path: ./out/index-win.exe
+          name: kyve-evm-win
+          path: ./out/evm-win.exe
 
   docker:
     name: Build and publish Docker container.
@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
 
       - name: Install yarn.
         run: npm install -g yarn

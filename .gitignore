@@ -1,7 +1,7 @@
+.idea
 db
 dist
 logs
 node_modules
 out
 .DS_Store
-arweave.json
