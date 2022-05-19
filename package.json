@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "build:binaries": "yarn build && rimraf out && pkg package.json",
+    "build:binaries": "yarn build && rimraf out && pkg --output out/kyve package.json && node ./node_modules/@kyve/core/dist/src/checksum.js",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
@@ -14,8 +14,7 @@
     "assets": "./node_modules/@kyve/sdk/dist/proto/*",
     "targets": [
       "latest-linux-x64",
-      "latest-macos-x64",
-      "latest-win-x64"
+      "latest-macos-x64"
     ],
     "outputPath": "out"
   },
@@ -23,7 +22,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@kyve/core": "^1.0.8",
+    "@kyve/core": "KYVENetwork/core#v0.4.0",
     "ethers": "^5.6.5"
   },
   "devDependencies": {
