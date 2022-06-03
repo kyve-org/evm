@@ -1,4 +1,4 @@
-import KYVE from '@kyve/core';
+import KYVE, { Item } from '@kyve/core';
 import { Network, Signature } from './types';
 import { fetchBlock } from './utils';
 import { name, version } from '../package.json';
@@ -11,8 +11,11 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class KyveEvm extends KYVE {
-  public async getDataItem(key: number): Promise<{ key: number; value: any }> {
+  public async getDataItem(previousKey: string | null): Promise<Item> {
     let block;
+
+    // derive nextKey from previousKey
+    const nextKey = (parseInt(previousKey || '0') + 1).toString();
 
     try {
       let network: Network | undefined;
@@ -25,21 +28,18 @@ class KyveEvm extends KYVE {
 
       block = await fetchBlock(
         this.pool.config.rpc,
-        key,
+        +nextKey,
         await this.getSignature(),
         network
       );
     } catch (err) {
-      this.logger.warn(
-        `⚠️  EXTERNAL ERROR: Failed to fetch block ${key}. Retrying ...`
-      );
-
+      this.logger.warn(` Failed to get data item from key ${nextKey}`);
       throw err;
     }
 
     if (!block) throw new Error();
 
-    return { key, value: block };
+    return { key: nextKey, value: block };
   }
 
   private async getSignature(): Promise<Signature> {
