@@ -773,39 +773,13 @@
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
-"@kyve/core@KYVENetwork/core#v0.4.0":
-  version "1.0.8"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/13ce3389dfe2227f4ec9f399892571a99cf33c4b"
-  dependencies:
-    "@cosmjs/proto-signing" "^0.27.1"
-    "@cosmjs/stargate" "^0.27.1"
-    "@kyve/sdk" KYVENetwork/sdk#main
-    "@types/cli-progress" "^3.9.2"
-    "@types/du" "^1.0.1"
-    "@types/jsonfile" "^6.0.1"
-    arweave "^1.10.17"
-    axios "^0.24.0"
-    base64url "^3.0.1"
-    bignumber.js "^9.0.1"
-    commander "^8.3.0"
-    du "^1.0.0"
-    fs-extra "^10.0.1"
-    jsonfile "^6.1.0"
-    object-hash "^2.2.0"
-    object-sizeof "^1.6.3"
-    prando "^6.0.1"
-    prom-client "^14.0.1"
-    protobufjs "^6.11.2"
-    tslog "^3.2.2"
-    unique-names-generator "^4.6.0"
-
 "@kyve/core@KYVENetwork/core#v0.5.0":
   version "1.0.8"
-  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/53b93e2f221abafa39798acdab837ef6eb609b2a"
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/9a66cc1d0e821ab62fc4a48b3b2c60daf2a36d40"
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
-    "@kyve/sdk" KYVENetwork/sdk#main
+    "@kyve/sdk" "1.1.0"
     "@types/cli-progress" "^3.9.2"
     "@types/jsonfile" "^6.0.1"
     arweave "^1.10.17"
@@ -816,16 +790,16 @@
     fs-extra "^10.0.1"
     jsonfile "^6.1.0"
     object-hash "^2.2.0"
-    object-sizeof "^1.6.3"
     prando "^6.0.1"
     prom-client "^14.0.1"
     protobufjs "^6.11.2"
     tslog "^3.2.2"
     unique-names-generator "^4.6.0"
 
-"@kyve/sdk@KYVENetwork/sdk#main":
-  version "1.0.8"
-  resolved "https://codeload.github.com/KYVENetwork/sdk/tar.gz/9b3a5f8266855a735226daf907312a68bab1b419"
+"@kyve/sdk@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@kyve/sdk/-/sdk-1.1.0.tgz#f3ee826543e9334d892628fddfd357a29febfaa1"
+  integrity sha512-7KHFMtgl518K/41zqgmWyogKxUO2cX3k0p2pTfb1jqE194CK1pnuvFbRk+yDZmLXPc9Fgp6hiNde0KYj+dOSWg==
   dependencies:
     "@cosmjs/amino" "^0.28.3"
     "@cosmjs/crypto" "^0.27.1"
@@ -926,11 +900,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/du@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/du/-/du-1.0.1.tgz#ed8bf4a0dab2ec0354fd4ccdd168b3c7d35cd326"
-  integrity sha512-vwNP+pzkI1ipznek2fCA4xj1kQyL9EJcfdBezD9eToe9eP2IgT3WLEBrVqiXal34LOyiAs8xCQKwugEYOKcMkw==
-
 "@types/jsonfile@^6.0.1":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/jsonfile/-/jsonfile-6.1.0.tgz#c413d113ae28619f418b8a6ce7a1dec29e8f8a1c"
@@ -944,9 +913,9 @@
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "17.0.38"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.38.tgz#f8bb07c371ccb1903f3752872c89f44006132947"
-  integrity sha512-5jY9RhV7c0Z4Jy09G+NIDTsCZ5G0L5n+Z+p+Y7t5VJHM30bgwzSjVtlcBxqAj+6L/swIlvtOSzr8rBk/aNyV2g==
+  version "17.0.40"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.40.tgz#76ee88ae03650de8064a6cf75b8d95f9f4a16090"
+  integrity sha512-UXdBxNGqTMtm7hCwh9HtncFVLrXoqA3oJW30j6XWp5BH/wu3mVeaxo7cq5benFdBw34HB3XDT2TRPI7rXZ+mDg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -1018,9 +987,9 @@ array-union@^2.1.0:
   integrity sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==
 
 arweave@^1.10.13, arweave@^1.10.17:
-  version "1.10.24"
-  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.10.24.tgz#500395c064f9497665c16c23688d828701337aaa"
-  integrity sha512-HSt9BwbMJC7Ntx5VvlHnuYyxMA7CJV1Yw6cyy0E+cf6+m1ytUeEGnd+zW2a259ptz3A+oJyRLA4zwHcC5R80gQ==
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.11.4.tgz#19e5850d3b9f655cacb0953b36a12ac6596b195c"
+  integrity sha512-EPUms1OMet/VFmYMefgxIpj17PIlIZzIteiHAn0tetN+d/LRV6N9CCsrg/t22hL6yLGdGRHrYlDEdsWqjwSSYg==
   dependencies:
     arconnect "^0.4.2"
     asn1.js "^5.4.1"
@@ -1235,7 +1204,7 @@ buffer@6.0.3, buffer@^6.0.3:
     base64-js "^1.3.1"
     ieee754 "^1.2.1"
 
-buffer@^5.5.0, buffer@^5.6.0:
+buffer@^5.5.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.7.1.tgz#ba62e7c13133053582197160851a8f648e99eed0"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
@@ -1437,13 +1406,6 @@ dir-glob@^3.0.1:
   integrity sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==
   dependencies:
     path-type "^4.0.0"
-
-du@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/du/-/du-1.0.0.tgz#f33b8d0c3944f7db78bdd6f2105c637a91f25b03"
-  integrity sha512-w00+6XpIq924IvDLyOOx5HFO4KwH6YV6buqFx6og/ErTaJ34kVOyI+Q2f+X8pvZkDoEgT6xspA4iYSN99mqPDA==
-  dependencies:
-    map-async "~0.1.1"
 
 elliptic@6.5.4, elliptic@^6.4.0, elliptic@^6.5.3:
   version "6.5.4"
@@ -2157,11 +2119,6 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-map-async@~0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/map-async/-/map-async-0.1.1.tgz#c897c0449f85864c74b5a3f196edb42156431745"
-  integrity sha512-nim726/DRF1yuTrx3qNJcFNqJCgiFD98eh/49EdI5LWTspX4whkVvT0hOcMEVJWCijKkp519vCY1uD05Hklc6w==
-
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -2313,13 +2270,6 @@ object-keys@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
-
-object-sizeof@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/object-sizeof/-/object-sizeof-1.6.3.tgz#6edbbf26825b971fd7a32125a800ed2a9895af95"
-  integrity sha512-LGtilAKuDGKCcvu1Xg3UvAhAeJJlFmblo3faltmOQ80xrGwAHxnauIXucalKdTEksHp/Pq9tZGz1hfyEmjFJPQ==
-  dependencies:
-    buffer "^5.6.0"
 
 object.assign@^4.1.2:
   version "4.1.2"
@@ -2583,7 +2533,7 @@ regexp.prototype.flags@^1.4.3:
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
-  integrity sha1-jGStX9MNqxyXbiNE/+f3kqam30I=
+  integrity sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==
 
 resolve@^1.22.0:
   version "1.22.0"
@@ -2927,9 +2877,9 @@ typeforce@^1.11.5:
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
 
 typescript@^4.6.4:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.2.tgz#1f9aa2ceb9af87cca227813b4310fff0b51593c4"
-  integrity sha512-Mamb1iX2FDUpcTRzltPxgWMKy3fhg0TN378ylbktPGPK/99KbDtMQ4W1hwgsbPAsG3a0xKa1vmw4VKZQbkvz5A==
+  version "4.7.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.3.tgz#8364b502d5257b540f9de4c40be84c98e23a129d"
+  integrity sha512-WOkT3XYvrpXx4vMMqlD+8R8R37fZkjyLGlxavMc4iB8lrl8L0DeTcHbYgw/v0N/z9wAFsgBhcsF0ruoySS22mA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

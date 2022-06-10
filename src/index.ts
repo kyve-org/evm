@@ -11,11 +11,8 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class KyveEvm extends KYVE {
-  public async getDataItem(previousKey: string | null): Promise<Item> {
+  public async getDataItem(height: number): Promise<Item> {
     let block;
-
-    // derive nextKey from previousKey
-    const nextKey = (parseInt(previousKey || '0') + 1).toString();
 
     try {
       let network: Network | undefined;
@@ -28,18 +25,18 @@ class KyveEvm extends KYVE {
 
       block = await fetchBlock(
         this.pool.config.rpc,
-        +nextKey,
+        height,
         await this.getSignature(),
         network
       );
     } catch (err) {
-      this.logger.warn(` Failed to get data item from key ${nextKey}`);
+      this.logger.warn(` Failed to get data item from height ${height}`);
       throw err;
     }
 
     if (!block) throw new Error();
 
-    return { key: nextKey, value: block };
+    return { key: height.toString(), value: block };
   }
 
   private async getSignature(): Promise<Signature> {
