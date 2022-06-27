@@ -1,4 +1,4 @@
-import KYVE from '@kyve/core';
+import KYVE, { Item } from '@kyve/core';
 import { Network, Signature } from './types';
 import { fetchBlock } from './utils';
 import { name, version } from '../package.json';
@@ -11,7 +11,7 @@ KYVE.metrics.register.setDefaultLabels({
 });
 
 class KyveEvm extends KYVE {
-  public async getDataItem(key: number): Promise<{ key: number; value: any }> {
+  public async getDataItem(key: string): Promise<Item> {
     let block;
 
     try {
@@ -25,21 +25,30 @@ class KyveEvm extends KYVE {
 
       block = await fetchBlock(
         this.pool.config.rpc,
-        key,
+        +key,
         await this.getSignature(),
         network
       );
     } catch (err) {
-      this.logger.warn(
-        `⚠️  EXTERNAL ERROR: Failed to fetch block ${key}. Retrying ...`
-      );
-
+      this.logger.warn(` Failed to get data item from height ${key}`);
       throw err;
     }
 
     if (!block) throw new Error();
 
     return { key, value: block };
+  }
+
+  public async getNextKey(key: string): Promise<string> {
+    if (key) {
+      return (parseInt(key) + 1).toString();
+    }
+
+    return '0';
+  }
+
+  public async formatValue(value: any): Promise<string> {
+    return value.timestamp.toString();
   }
 
   private async getSignature(): Promise<Signature> {

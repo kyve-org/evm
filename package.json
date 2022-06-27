@@ -1,10 +1,10 @@
 {
   "name": "@kyve/evm",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "build:binaries": "yarn build && rimraf out && pkg --output out/kyve package.json && node ./node_modules/@kyve/core/dist/src/checksum.js",
+    "build:binaries": "yarn build && rimraf out && pkg --no-bytecode --public-packages '*' --output out/kyve package.json && node ./node_modules/@kyve/core/dist/src/checksum.js",
     "start": "node ./dist/src/index.js",
     "format": "prettier --write ."
   },
@@ -22,7 +22,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@kyve/core": "1.1.0",
+    "@kyve/core": "1.2.0",
     "ethers": "^5.6.5"
   },
   "devDependencies": {
