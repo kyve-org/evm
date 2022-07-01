@@ -1,5 +1,6 @@
 .idea
 db
+cache
 dist
 logs
 node_modules
