@@ -22,7 +22,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@kyve/core": "1.2.0",
+    "@kyve/core": "1.2.1",
     "ethers": "^5.6.5"
   },
   "devDependencies": {

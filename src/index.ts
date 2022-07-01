@@ -48,7 +48,7 @@ class KyveEvm extends KYVE {
   }
 
   public async formatValue(value: any): Promise<string> {
-    return value.timestamp.toString();
+    return value.hash;
   }
 
   private async getSignature(): Promise<Signature> {
