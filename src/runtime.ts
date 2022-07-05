@@ -1,69 +1,63 @@
-import { DataItem, IRuntime } from '@kyve/core';
+import { Signature, DataItem, IRuntime } from '@kyve/core';
 import { name, version } from '../package.json';
-import { Network, Signature } from './types';
-import { fetchBlock } from './utils';
+import { providers } from 'ethers';
 
 export default class EVM implements IRuntime {
   public name = name;
   public version = version;
 
-  public async getDataItem(key: string, config: any): Promise<DataItem> {
-    let block;
+  public async getDataItem(
+    key: string,
+    config: any,
+    requestSignature: () => Promise<Signature>
+  ): Promise<DataItem> {
+    // set network settings if available
+    let network;
 
-    try {
-      let network: Network | undefined;
-      if (config.chainId && config.chainName) {
-        network = {
-          chainId: config.chainId,
-          name: config.chainName,
-        };
-      }
-
-      block = await fetchBlock(
-        config.rpc,
-        +key,
-        await this.getSignature(),
-        network
-      );
-    } catch (err) {
-      throw err;
+    if (config.chainId && config.chainName) {
+      network = {
+        chainId: config.chainId,
+        name: config.chainName,
+      };
     }
 
-    if (!block) throw new Error();
+    // requestSignature for coinbase cloud
+    const signature = await requestSignature();
 
-    return { key, value: block };
+    // fetch data item from key
+    const value = await new providers.StaticJsonRpcProvider(
+      {
+        url: config.rpc,
+        headers: {
+          'Content-Type': 'application/json',
+          Signature: signature.signature,
+          'Public-Key': signature.pubKey,
+          'Pool-ID': signature.poolId,
+          Timestamp: signature.timestamp,
+        },
+      },
+      network
+    ).getBlockWithTransactions(+key);
+
+    // throw if data item is not available
+    if (!value) throw new Error();
+
+    // Delete the number of confirmations from a transaction to keep data deterministic.
+    value.transactions.forEach(
+      (tx: Partial<providers.TransactionResponse>) => delete tx.confirmations
+    );
+
+    return {
+      key,
+      value,
+    };
   }
 
   public async getNextKey(key: string): Promise<string> {
-    if (key) {
-      return (parseInt(key) + 1).toString();
-    }
-
-    return '0';
+    return (parseInt(key) + 1).toString();
   }
 
-  public async getFormattedValueFromDataItem(value: any): Promise<string> {
+  public async formatValue(value: any): Promise<string> {
     return value.hash;
-  }
-
-  private async getSignature(): Promise<Signature> {
-    // TODO: move to core
-    // const address = await this.sdk.wallet.getAddress();
-    // const timestamp = new Date().valueOf().toString();
-    // const message = `${address}//${this.poolId}//${timestamp}`;
-    // const { signature, pub_key } = await this.sdk.signString(message);
-    // return {
-    //   signature,
-    //   pubKey: pub_key.value,
-    //   poolId: this.poolId.toString(),
-    //   timestamp,
-    // };
-
-    return {
-      signature: '',
-      pubKey: '',
-      poolId: '',
-      timestamp: '',
-    };
   }
 }

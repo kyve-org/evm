@@ -1,8 +1,4 @@
-import { Node } from '@kyve/core';
-
-import Arweave from '@kyve/core/dist/src/storage/Arweave';
-import Gzip from '@kyve/core/dist/src/compression/Gzip';
-import JsonFileCache from '@kyve/core/dist/src/cache/JsonFileCache';
+import { Node, Arweave, Gzip, JsonFileCache } from '@kyve/core';
 
 import EVM from './runtime';
 
