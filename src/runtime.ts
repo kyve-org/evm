@@ -1,4 +1,4 @@
-import { Signature, DataItem, IRuntime } from '@kyve/core';
+import { DataItem, IRuntime, Node } from '@kyve/core';
 import { name, version } from '../package.json';
 import { providers } from 'ethers';
 
@@ -6,51 +6,48 @@ export default class EVM implements IRuntime {
   public name = name;
   public version = version;
 
-  public async getDataItem(
-    key: string,
-    config: any,
-    requestSignature: () => Promise<Signature>
-  ): Promise<DataItem> {
-    // set network settings if available
-    let network;
+  public async getDataItem(core: Node, key: string): Promise<DataItem> {
+    try {
+      // set network settings if available
+      let network;
 
-    if (config.chainId && config.chainName) {
-      network = {
-        chainId: config.chainId,
-        name: config.chainName,
-      };
-    }
+      if (core.poolConfig.chainId && core.poolConfig.chainName) {
+        network = {
+          chainId: core.poolConfig.chainId,
+          name: core.poolConfig.chainName,
+        };
+      }
 
-    // requestSignature for coinbase cloud
-    const signature = await requestSignature();
+      // get auth headers for coinbase cloud endpoints
+      const headers = await this.generateCoinbaseCloudHeaders(core);
 
-    // fetch data item from key
-    const value = await new providers.StaticJsonRpcProvider(
-      {
-        url: config.rpc,
-        headers: {
-          'Content-Type': 'application/json',
-          Signature: signature.signature,
-          'Public-Key': signature.pubKey,
-          'Pool-ID': signature.poolId,
-          Timestamp: signature.timestamp,
+      // setup web3 provider
+      const provider = new providers.StaticJsonRpcProvider(
+        {
+          url: core.poolConfig.rpc,
+          headers,
         },
-      },
-      network
-    ).getBlockWithTransactions(+key);
+        network
+      );
 
-    // throw if data item is not available
-    if (!value) throw new Error();
+      // fetch data item
+      const value = await provider.getBlockWithTransactions(+key);
 
-    // Delete the number of confirmations from a transaction to keep data deterministic.
-    value.transactions.forEach(
-      (tx: Partial<providers.TransactionResponse>) => delete tx.confirmations
-    );
+      // throw if data item is not available
+      if (!value) throw new Error();
 
-    return {
-      key,
-      value,
-    };
+      // Delete the number of confirmations from a transaction to keep data deterministic.
+      value.transactions.forEach(
+        (tx: Partial<providers.TransactionResponse>) => delete tx.confirmations
+      );
+
+      return {
+        key,
+        value,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async getNextKey(key: string): Promise<string> {
@@ -59,5 +56,22 @@ export default class EVM implements IRuntime {
 
   public async formatValue(value: any): Promise<string> {
     return value.hash;
+  }
+
+  private async generateCoinbaseCloudHeaders(core: Node): Promise<any> {
+    // requestSignature for coinbase cloud
+    const address = core.client.account.address;
+    const timestamp = new Date().valueOf().toString();
+    const poolId = core.pool.id;
+
+    const message = `${address}//${poolId}//${timestamp}`;
+
+    return {
+      'Content-Type': 'application/json',
+      Signature: '',
+      'Public-Key': '',
+      'Pool-ID': poolId,
+      Timestamp: timestamp,
+    };
   }
 }
