@@ -22,10 +22,6 @@ jobs:
           zip kyve-macos.zip kyve-macos
           rm kyve-macos
           cd ..
-      - uses: google-github-actions/release-please-action@v3
-        with:
-          release-type: node
-          package-name: release-please-action
       - name: Generate Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
