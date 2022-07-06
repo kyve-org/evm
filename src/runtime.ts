@@ -64,12 +64,14 @@ export default class EVM implements IRuntime {
     const timestamp = new Date().valueOf().toString();
     const poolId = core.pool.id;
 
-    const message = `${address}//${poolId}//${timestamp}`;
+    const { signature, pub_key } = await core.client.signString(
+      `${address}//${poolId}//${timestamp}`
+    );
 
     return {
       'Content-Type': 'application/json',
-      Signature: '',
-      'Public-Key': '',
+      Signature: signature,
+      'Public-Key': pub_key,
       'Pool-ID': poolId,
       Timestamp: timestamp,
     };

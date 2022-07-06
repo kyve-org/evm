@@ -22,7 +22,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@kyve/core": "KYVENetwork/core#v0.6.0",
+    "@kyve/core": "git+ssh://git@github.com:KYVENetwork/core.git#v0.6.0",
     "ethers": "^5.6.5"
   },
   "devDependencies": {

@@ -1,9 +1,9 @@
 .idea
 db
-cache
 dist
 logs
 node_modules
 out
 .DS_Store
 arweave.json
+cache
