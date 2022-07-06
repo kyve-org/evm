@@ -814,10 +814,10 @@
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
-"@kyve/core@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.2.1.tgz#cd47838662e060a0a42a0c7fc9226a6b92693823"
-  integrity sha512-WJylVG3kAfbhOCJBOH6D/v9sgfF1UqAkS95LLstCRNNaVH4fMGtaDI5WGpxmK3czqwVXy3opFVrG1NV3qWuaJw==
+"@kyve/core@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.2.2.tgz#c67995b8ca9e59f6590a3328d364ea56e49bc258"
+  integrity sha512-PS2iXFGKJdSC8sYfsM0+TKlWA8o4IOJCIyQ9yHxIGtNv8+OMLKbgMZqrGIqY1BZtOFCjFN1AZ6jjh7V1pZufGA==
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
@@ -956,9 +956,9 @@
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.0.tgz#67c7b724e1bcdd7a8821ce0d5ee184d3b4dd525a"
-  integrity sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.3.tgz#463fc47f13ec0688a33aec75d078a0541a447199"
+  integrity sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==
 
 "@types/node@10.12.18":
   version "10.12.18"
