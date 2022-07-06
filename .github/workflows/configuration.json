@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "title": "### Features",
+      "labels": ["feat"]
+    },
+    {
+      "title": "### Improvements",
+      "labels": ["chore"]
+    },
+    {
+      "title": "### Fixes",
+      "labels": ["fix"]
+    }
+  ],
+  "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
+  "pr_template": "- ${{TITLE}}",
+  "empty_template": "- no changes",
+  "label_extractor": [
+    {
+      "pattern": "(chore|fix|feat)!?: (.*)",
+      "target": "$1",
+      "flags": "gu"
+    }
+  ],
+  "transformers": [
+    {
+      "pattern": "(chore|fix|feat)!?: (.*)",
+      "target": "$2"
+    }
+  ]
+}

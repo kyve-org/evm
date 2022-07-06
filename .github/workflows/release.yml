@@ -1,70 +1,45 @@
-name: Release
-
 on:
-  release:
-    types: [released]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+  push:
+    # Pattern matched against refs/tags
+    tags:
+      - '*'           # Push events to every tag not containing /
+name: Create Release Binaries
 jobs:
-  binaries:
-    name: Build release binaries.
+  generate:
+    name: Create release-artifacts
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-
-      - name: Install yarn.
-        run: npm install -g yarn
-      - name: Install dependencies.
-        run: yarn install
-      - name: Build.
-        run: yarn build:binaries
-
-      - uses: actions/upload-artifact@v3
+      - name: Checkout the repository
+        uses: actions/checkout@main
+      - name: Build Binaries
+        run: |
+          yarn install
+          yarn build
+          yarn build:binaries
+          cd out
+          zip kyve-linux.zip kyve-linux
+          rm kyve-linux
+          zip kyve-macos.zip kyve-macos
+          rm kyve-macos
+          cd ..
+      - uses: google-github-actions/release-please-action@v3
         with:
-          name: kyve-evm-linux
-          path: ./out/evm-linux
-      - uses: actions/upload-artifact@v3
+          release-type: node
+          package-name: release-please-action
+      - name: Generate Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
         with:
-          name: kyve-evm-macos
-          path: ./out/evm-macos
-      - uses: actions/upload-artifact@v3
+          configuration: ".github/workflows/configuration.json"
+          commitMode: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: kyve-evm-win
-          path: ./out/evm-win.exe
-
-  docker:
-    name: Build and publish Docker container.
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Login to Docker.
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build the Docker image.
-        run: docker build -t kyve/evm:${GITHUB_REF#refs/tags/} -t kyve/evm:latest .
-
-      - name: Push to Docker hub.
-        run: docker push -a kyve/evm
-
-  webhook:
-    name: Post a message to Discord.
-    needs: [binaries, docker]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-
-      - name: Install yarn.
-        run: npm install -g yarn
-      - name: Install dependencies.
-        run: yarn install
-
-      - name: Run script.
-        run: DISCORD=${{ secrets.DISCORD }} VERSION=${GITHUB_REF#refs/tags/} node .github/webhook.js
+          body: ${{steps.github_release.outputs.changelog}}
+          tag_name: ${{ steps.vars.outputs.tag_name }}
+          files: out/*
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
