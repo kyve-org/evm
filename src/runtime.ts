@@ -71,7 +71,7 @@ export default class EVM implements IRuntime {
     return {
       'Content-Type': 'application/json',
       Signature: signature,
-      'Public-Key': pub_key,
+      'Public-Key': pub_key.value,
       'Pool-ID': poolId,
       Timestamp: timestamp,
     };
