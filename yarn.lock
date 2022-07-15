@@ -881,10 +881,9 @@
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
-"@kyve/core@1.3.2":
+"@kyve/core@KYVENetwork/core#v1.3.3":
   version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.3.2.tgz#85d0f78dea1ac1a1d34a983f8c3aa97eabc95a93"
-  integrity sha512-I+WGzpWCQrsuSWSIOEecI0u6SNmJ+Ne7MdZ4i2XXUbCdI4Ef4i6yt8rfswizYxD3rON1GCV3q2KnuCiS7WTvwA==
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/51788c94cc24e9384c57d84a8442b1d834cbbb2f"
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
