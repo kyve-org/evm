@@ -881,10 +881,10 @@
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
-"@kyve/core@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.3.1.tgz#763dc6405b4053bbf5c50e103b97aa570f90d53f"
-  integrity sha512-CUIY/aGSe3vZLOzonO1w8y/pPDSkZZib2Q5yMPhZF5QymdBG8ylqzkobaHSNDUhXbhkV0SAO6zadXpgXoNTsMQ==
+"@kyve/core@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.3.2.tgz#85d0f78dea1ac1a1d34a983f8c3aa97eabc95a93"
+  integrity sha512-I+WGzpWCQrsuSWSIOEecI0u6SNmJ+Ne7MdZ4i2XXUbCdI4Ef4i6yt8rfswizYxD3rON1GCV3q2KnuCiS7WTvwA==
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
