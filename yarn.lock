@@ -881,15 +881,14 @@
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
-"@kyve/core@1.3.5":
+"@kyve/core@KYVENetwork/core#v0.7.0":
   version "1.3.5"
-  resolved "https://registry.yarnpkg.com/@kyve/core/-/core-1.3.5.tgz#eee18ac180780402755c3ff0f5cc7b3b4815d306"
-  integrity sha512-8EbwMnmSnA22q67e9MSJ9Tlsqkx29xKVR8qRV6KN5NhXnrrwy8XMpKzqUcbv5pnTPhNsCzmjWVWmUvLlxJDCXQ==
+  resolved "https://codeload.github.com/KYVENetwork/core/tar.gz/c777f21ae3ac518be216a9b7d1d258b70a2785e3"
   dependencies:
     "@cosmjs/proto-signing" "^0.27.1"
     "@cosmjs/stargate" "^0.27.1"
     "@kyve/proto" "1.0.0"
-    "@kyve/sdk" "2.0.0"
+    "@kyve/sdk" "2.2.2"
     "@types/cli-progress" "^3.9.2"
     "@types/jsonfile" "^6.0.1"
     arweave "^1.10.17"
@@ -899,6 +898,7 @@
     commander "^8.3.0"
     fs-extra "^10.0.1"
     jsonfile "^6.1.0"
+    keytar "^7.9.0"
     prando "^6.0.1"
     prom-client "^14.0.1"
     protobufjs "^6.11.2"
@@ -915,10 +915,20 @@
     "@protobufs/google" "^0.0.9"
     ts-proto "^1.115.4"
 
-"@kyve/sdk@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@kyve/sdk/-/sdk-2.0.0.tgz#1abf06223007b0eb8e6c0002600b11ed903c3f9d"
-  integrity sha512-3F1WL8BrlEGLGaT6YV75qGccooYbMNdLFHb0FjO4ZLorVFYS04H2vH/3HIPTZcy/aMemgdcNrlxDdvcSVtoR0g==
+"@kyve/proto@^1.0.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@kyve/proto/-/proto-1.2.0.tgz#08da8944f2e6145db0d236497a7b806060a8e56e"
+  integrity sha512-SMOCxPFYdhB1ekeVrtmk09yVJ8TMZAuAdl/VQDrmHzvtGgosoPClUl9CRo/3tln98cSxeE1sXDoBlxZeUvEPjw==
+  dependencies:
+    "@protobufs/cosmos" "^0.0.9"
+    "@protobufs/gogoproto" "^0.0.9"
+    "@protobufs/google" "^0.0.9"
+    ts-proto "^1.115.4"
+
+"@kyve/sdk@2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@kyve/sdk/-/sdk-2.2.2.tgz#451f5ddaab5cc75a2620e63f1a778d414e1b4bbf"
+  integrity sha512-OmXLC9juVEDXxBjHVo4tOoN8Wuynaz/IJLJwA7w/vXMA8nJWSq+BylO9ae9H74pSmx1chA4FYWHT/rGC7D/YKw==
   dependencies:
     "@cosmjs/amino" "0.28.3"
     "@cosmjs/crypto" "0.27.1"
@@ -929,7 +939,7 @@
     "@cosmjs/tendermint-rpc" "0.28.0"
     "@cosmostation/extension-client" "^0.0.6"
     "@keplr-wallet/cosmos" "0.9.16"
-    "@kyve/proto" "1.0.0"
+    "@kyve/proto" "^1.0.0"
     axios "0.25.0"
     bech32 "2.0.0"
     bignumber.js "9.0.2"
@@ -1072,9 +1082,9 @@
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "18.0.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.6.tgz#0ba49ac517ad69abe7a1508bc9b3a5483df9d5d7"
-  integrity sha512-/xUq6H2aQm261exT6iZTMifUySEt4GR5KX8eYyY+C4MSNPqSh9oNIP7tz2GLKTlFaiBbgZNxffoR3CVRG+cljw==
+  version "18.6.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.6.1.tgz#828e4785ccca13f44e2fb6852ae0ef11e3e20ba5"
+  integrity sha512-z+2vB6yDt1fNwKOeGbckpmirO+VBDuQqecXkgeIqDlaOtmKn6hPR/viQ8cxCfqLU4fTlvM3+YjM367TukWdxpg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -1536,6 +1546,13 @@ decompress-response@^4.2.0:
   dependencies:
     mimic-response "^2.0.0"
 
+decompress-response@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/decompress-response/-/decompress-response-6.0.0.tgz#ca387612ddb7e104bd16d85aab00d5ecf09c66fc"
+  integrity sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==
+  dependencies:
+    mimic-response "^3.1.0"
+
 deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
@@ -1563,6 +1580,11 @@ detect-libc@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
+
+detect-libc@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-2.0.1.tgz#e1897aa88fa6ad197862937fbc0441ef352ee0cd"
+  integrity sha512-463v3ZeIrcWtdgIg6vI6XUncguvr2TnGl4SzDXinkt9mSLpBJKXT3mW6xT3VQdDN11+WVs29pgvivTc4Lp8v+w==
 
 dir-glob@^3.0.1:
   version "3.0.1"
@@ -2224,6 +2246,14 @@ jsonfile@^6.0.1, jsonfile@^6.1.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+keytar@^7.9.0:
+  version "7.9.0"
+  resolved "https://registry.yarnpkg.com/keytar/-/keytar-7.9.0.tgz#4c6225708f51b50cbf77c5aae81721964c2918cb"
+  integrity sha512-VPD8mtVtm5JNtA2AErl6Chp06JBfy7diFQ7TQQhdpWOl6MrCRB+eRbvAZUsbGQS9kiMq0coJsy0W0vHpDCkWsQ==
+  dependencies:
+    node-addon-api "^4.3.0"
+    prebuild-install "^7.0.1"
+
 libsodium-wrappers@^0.7.6:
   version "0.7.10"
   resolved "https://registry.yarnpkg.com/libsodium-wrappers/-/libsodium-wrappers-0.7.10.tgz#13ced44cacb0fc44d6ac9ce67d725956089ce733"
@@ -2301,6 +2331,11 @@ mimic-response@^2.0.0:
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-2.1.0.tgz#d13763d35f613d09ec37ebb30bac0469c0ee8f43"
   integrity sha512-wXqjST+SLt7R009ySCglWBCFpjUygmCIfD790/kVbiGmUgfYGuB14PiTd5DwVxSV4NcYHjzMkoj5LjQZwTQLEA==
 
+mimic-response@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
+  integrity sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -2362,6 +2397,18 @@ node-abi@^2.21.0:
   integrity sha512-/2D0wOQPgaUWzVSVgRMx+trKJRC2UG4SUc4oCJoXx9Uxjtp0Vy3/kt7zcbxHF8+Z/pK3UloLWzBISg72brfy1w==
   dependencies:
     semver "^5.4.1"
+
+node-abi@^3.3.0:
+  version "3.22.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.22.0.tgz#00b8250e86a0816576258227edbce7bbe0039362"
+  integrity sha512-u4uAs/4Zzmp/jjsD9cyFYDXeISfUWaAVWshPmDZOFOv4Xl4SbzTXm53I04C2uRueYJ+0t5PEtLH/owbn2Npf/w==
+  dependencies:
+    semver "^7.3.5"
+
+node-addon-api@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-4.3.0.tgz#52a1a0b475193e0928e98e0426a0d1254782b77f"
+  integrity sha512-73sE9+3UaLYYFmDsFZnqCInzPyh3MqIwZO9cw58yIqAZhONrrabrYyYe3TuIqtIiOuTXVhsGau8hcrhhwSsDIQ==
 
 node-fetch@^2.6.6:
   version "2.6.7"
@@ -2477,7 +2524,7 @@ pkg-fetch@3.4.2:
     tar-fs "^2.1.1"
     yargs "^16.2.0"
 
-pkg@^5.6.0:
+pkg@^5.8.0:
   version "5.8.0"
   resolved "https://registry.yarnpkg.com/pkg/-/pkg-5.8.0.tgz#a77644aeff0b94a1656d7f76558837f7c754a4c0"
   integrity sha512-8h9PUDYFi+LOMLbIyGRdP21g08mAtHidSpofSrf8LWhxUWGHymaRzcopEGiynB5EhQmZUKM6PQ9kCImV2TpdjQ==
@@ -2518,6 +2565,24 @@ prebuild-install@6.1.4:
     pump "^3.0.0"
     rc "^1.2.7"
     simple-get "^3.0.3"
+    tar-fs "^2.0.0"
+    tunnel-agent "^0.6.0"
+
+prebuild-install@^7.0.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-7.1.1.tgz#de97d5b34a70a0c81334fd24641f2a1702352e45"
+  integrity sha512-jAXscXWMcCK8GgCoHOfIr0ODh5ai8mj63L2nWrjuAgXE6tDyYGnx4/8o/rCgU+B4JSyZBKbeZqzhtwtC3ovxjw==
+  dependencies:
+    detect-libc "^2.0.0"
+    expand-template "^2.0.3"
+    github-from-package "0.0.0"
+    minimist "^1.2.3"
+    mkdirp-classic "^0.5.3"
+    napi-build-utils "^1.0.1"
+    node-abi "^3.3.0"
+    pump "^3.0.0"
+    rc "^1.2.7"
+    simple-get "^4.0.0"
     tar-fs "^2.0.0"
     tunnel-agent "^0.6.0"
 
@@ -2797,6 +2862,15 @@ simple-get@^3.0.3:
     once "^1.3.1"
     simple-concat "^1.0.0"
 
+simple-get@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/simple-get/-/simple-get-4.0.1.tgz#4a39db549287c979d352112fa03fd99fd6bc3543"
+  integrity sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==
+  dependencies:
+    decompress-response "^6.0.0"
+    once "^1.3.1"
+    simple-concat "^1.0.0"
+
 slash@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
@@ -2986,9 +3060,9 @@ ts-proto-descriptors@1.7.1:
     protobufjs "^6.8.8"
 
 ts-proto@^1.115.4:
-  version "1.117.1"
-  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.117.1.tgz#20538c8d36ede1c72862f135a200cb5de0f14651"
-  integrity sha512-BVFU7oJYzi4UvZZbDLc5OyygYSMchoUgxzdOoOeb3Vm957i8UOA4BT0oCo7lvXba4tkpvsu0HYUVch9BoTu3Jw==
+  version "1.120.0"
+  resolved "https://registry.yarnpkg.com/ts-proto/-/ts-proto-1.120.0.tgz#871626dd89bdade3c05f7148eb86b58717b54cf1"
+  integrity sha512-2hJB89nNSvyTrXzl9B8Un9nQV5O+aBHF83gzx1avISgm1nWySZeN7dvKX/ZztY0DPPxBqeHvTFBzTioTqNQvxw==
   dependencies:
     "@types/object-hash" "^1.3.0"
     dataloader "^1.4.0"

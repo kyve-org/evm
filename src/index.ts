@@ -7,4 +7,4 @@ new Node()
   .addStorageProvider(new Arweave())
   .addCompression(new Gzip())
   .addCache(new JsonFileCache())
-  .start();
+  .bootstrap();
